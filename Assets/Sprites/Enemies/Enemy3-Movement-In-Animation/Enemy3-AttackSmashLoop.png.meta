@@ -43,7 +43,7 @@ TextureImporter:
   maxTextureSize: 2048
   textureSettings:
     serializedVersion: 2
-    filterMode: 1
+    filterMode: 0
     aniso: 1
     mipBias: 0
     wrapU: 1
@@ -109,12 +109,12 @@ TextureImporter:
       name: Enemy3-AttackSmashLoop_0
       rect:
         serializedVersion: 2
-        x: 10
-        y: 7
-        width: 43
-        height: 56
-      alignment: 0
-      pivot: {x: 0, y: 0}
+        x: 11
+        y: 8
+        width: 41
+        height: 54
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -131,12 +131,12 @@ TextureImporter:
       name: Enemy3-AttackSmashLoop_1
       rect:
         serializedVersion: 2
-        x: 74
-        y: 7
-        width: 43
-        height: 56
-      alignment: 0
-      pivot: {x: 0, y: 0}
+        x: 75
+        y: 8
+        width: 41
+        height: 54
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -153,12 +153,12 @@ TextureImporter:
       name: Enemy3-AttackSmashLoop_2
       rect:
         serializedVersion: 2
-        x: 138
-        y: 7
-        width: 43
-        height: 57
-      alignment: 0
-      pivot: {x: 0, y: 0}
+        x: 139
+        y: 8
+        width: 41
+        height: 55
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -175,7 +175,7 @@ TextureImporter:
     customData: 
     physicsShape: []
     bones: []
-    spriteID: 
+    spriteID: fe66f1ba421f00049accb78de742b287
     internalID: 0
     vertices: []
     indices: 
@@ -183,7 +183,9 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     spriteCustomMetadata:
-      entries: []
+      entries:
+      - key: SpriteEditor.SliceSettings
+        value: '{"sliceOnImport":false,"gridCellCount":{"x":1.0,"y":1.0},"gridSpriteSize":{"x":64.0,"y":64.0},"gridSpriteOffset":{"x":0.0,"y":0.0},"gridSpritePadding":{"x":0.0,"y":0.0},"pivot":{"x":0.5,"y":0.0},"pivotPixels":{"x":0.0,"y":0.0},"autoSlicingMethod":0,"spriteAlignment":7,"pivotUnitMode":0,"slicingType":0,"keepEmptyRects":false,"isAlternate":false}'
     nameFileIdTable:
       Enemy3-AttackSmashLoop_0: 3048245471483143454
       Enemy3-AttackSmashLoop_1: 7434703495234430686

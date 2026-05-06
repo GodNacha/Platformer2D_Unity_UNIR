@@ -70,7 +70,7 @@ TextureImporter:
   maxTextureSize: 2048
   textureSettings:
     serializedVersion: 2
-    filterMode: 1
+    filterMode: 0
     aniso: 1
     mipBias: 0
     wrapU: 1
@@ -136,12 +136,12 @@ TextureImporter:
       name: Enemy3-AttackSmashStart_0
       rect:
         serializedVersion: 2
-        x: 10
-        y: 6
-        width: 43
-        height: 55
-      alignment: 0
-      pivot: {x: 0, y: 0}
+        x: 11
+        y: 7
+        width: 41
+        height: 53
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -158,12 +158,12 @@ TextureImporter:
       name: Enemy3-AttackSmashStart_1
       rect:
         serializedVersion: 2
-        x: 74
-        y: 6
-        width: 43
-        height: 55
-      alignment: 0
-      pivot: {x: 0, y: 0}
+        x: 75
+        y: 7
+        width: 41
+        height: 53
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -180,12 +180,12 @@ TextureImporter:
       name: Enemy3-AttackSmashStart_2
       rect:
         serializedVersion: 2
-        x: 138
-        y: 6
-        width: 43
-        height: 55
-      alignment: 0
-      pivot: {x: 0, y: 0}
+        x: 139
+        y: 7
+        width: 41
+        height: 53
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -202,12 +202,12 @@ TextureImporter:
       name: Enemy3-AttackSmashStart_3
       rect:
         serializedVersion: 2
-        x: 202
-        y: 6
-        width: 43
-        height: 55
-      alignment: 0
-      pivot: {x: 0, y: 0}
+        x: 203
+        y: 7
+        width: 41
+        height: 53
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -224,12 +224,12 @@ TextureImporter:
       name: Enemy3-AttackSmashStart_4
       rect:
         serializedVersion: 2
-        x: 266
-        y: 6
-        width: 43
-        height: 55
-      alignment: 0
-      pivot: {x: 0, y: 0}
+        x: 267
+        y: 7
+        width: 41
+        height: 53
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -246,12 +246,12 @@ TextureImporter:
       name: Enemy3-AttackSmashStart_5
       rect:
         serializedVersion: 2
-        x: 330
-        y: 6
-        width: 43
-        height: 55
-      alignment: 0
-      pivot: {x: 0, y: 0}
+        x: 331
+        y: 7
+        width: 41
+        height: 53
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -268,12 +268,12 @@ TextureImporter:
       name: Enemy3-AttackSmashStart_6
       rect:
         serializedVersion: 2
-        x: 394
-        y: 5
-        width: 43
-        height: 55
-      alignment: 0
-      pivot: {x: 0, y: 0}
+        x: 395
+        y: 6
+        width: 41
+        height: 53
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -290,12 +290,12 @@ TextureImporter:
       name: Enemy3-AttackSmashStart_7
       rect:
         serializedVersion: 2
-        x: 458
-        y: 8
-        width: 43
-        height: 55
-      alignment: 0
-      pivot: {x: 0, y: 0}
+        x: 459
+        y: 9
+        width: 41
+        height: 53
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -312,12 +312,12 @@ TextureImporter:
       name: Enemy3-AttackSmashStart_8
       rect:
         serializedVersion: 2
-        x: 522
-        y: 13
-        width: 43
-        height: 50
-      alignment: 0
-      pivot: {x: 0, y: 0}
+        x: 523
+        y: 14
+        width: 41
+        height: 48
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -334,12 +334,12 @@ TextureImporter:
       name: Enemy3-AttackSmashStart_9
       rect:
         serializedVersion: 2
-        x: 586
-        y: 17
-        width: 43
-        height: 47
-      alignment: 0
-      pivot: {x: 0, y: 0}
+        x: 587
+        y: 18
+        width: 41
+        height: 45
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -356,12 +356,12 @@ TextureImporter:
       name: Enemy3-AttackSmashStart_10
       rect:
         serializedVersion: 2
-        x: 650
-        y: 21
-        width: 43
-        height: 43
-      alignment: 0
-      pivot: {x: 0, y: 0}
+        x: 651
+        y: 22
+        width: 41
+        height: 42
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -378,12 +378,12 @@ TextureImporter:
       name: Enemy3-AttackSmashStart_11
       rect:
         serializedVersion: 2
-        x: 714
-        y: 22
-        width: 43
-        height: 42
-      alignment: 0
-      pivot: {x: 0, y: 0}
+        x: 715
+        y: 23
+        width: 41
+        height: 41
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -400,7 +400,7 @@ TextureImporter:
     customData: 
     physicsShape: []
     bones: []
-    spriteID: 
+    spriteID: b9e524e255d5d83479cf1ae26d7d74c4
     internalID: 0
     vertices: []
     indices: 
@@ -408,7 +408,9 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     spriteCustomMetadata:
-      entries: []
+      entries:
+      - key: SpriteEditor.SliceSettings
+        value: '{"sliceOnImport":false,"gridCellCount":{"x":1.0,"y":1.0},"gridSpriteSize":{"x":64.0,"y":64.0},"gridSpriteOffset":{"x":0.0,"y":0.0},"gridSpritePadding":{"x":0.0,"y":0.0},"pivot":{"x":0.5,"y":0.0},"pivotPixels":{"x":0.0,"y":0.0},"autoSlicingMethod":0,"spriteAlignment":7,"pivotUnitMode":0,"slicingType":0,"keepEmptyRects":false,"isAlternate":false}'
     nameFileIdTable:
       Enemy3-AttackSmashStart_0: 1777488443767830289
       Enemy3-AttackSmashStart_1: -7833720409454760587

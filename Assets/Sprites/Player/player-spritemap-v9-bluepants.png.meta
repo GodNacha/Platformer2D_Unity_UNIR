@@ -1,0 +1,899 @@
+fileFormatVersion: 2
+guid: 8e6844c6ea01e3040ad8925f5256e8c7
+TextureImporter:
+  internalIDToNameTable:
+  - first:
+      213: -4978760729978351622
+    second: player-spritemap-v9-bluepants_0
+  - first:
+      213: 8750548016028164171
+    second: player-spritemap-v9-bluepants_1
+  - first:
+      213: -2208269321344342802
+    second: player-spritemap-v9-bluepants_2
+  - first:
+      213: -3567558756475581005
+    second: player-spritemap-v9-bluepants_3
+  - first:
+      213: -3469681891636512437
+    second: player-spritemap-v9-bluepants_4
+  - first:
+      213: 2375880261138208284
+    second: player-spritemap-v9-bluepants_5
+  - first:
+      213: 4881091025960738429
+    second: player-spritemap-v9-bluepants_6
+  - first:
+      213: -6825084993346360741
+    second: player-spritemap-v9-bluepants_7
+  - first:
+      213: -5917259043981597569
+    second: player-spritemap-v9-bluepants_8
+  - first:
+      213: -8064982938455479058
+    second: player-spritemap-v9-bluepants_9
+  - first:
+      213: -3827077319467652527
+    second: player-spritemap-v9-bluepants_10
+  - first:
+      213: 2953180330814494846
+    second: player-spritemap-v9-bluepants_11
+  - first:
+      213: 6725508965795634342
+    second: player-spritemap-v9-bluepants_12
+  - first:
+      213: -7567310820814104250
+    second: player-spritemap-v9-bluepants_13
+  - first:
+      213: -4668879959281868220
+    second: player-spritemap-v9-bluepants_14
+  - first:
+      213: -5495922276886202972
+    second: player-spritemap-v9-bluepants_15
+  - first:
+      213: -3244053965151257340
+    second: player-spritemap-v9-bluepants_16
+  - first:
+      213: 3246110389044659786
+    second: player-spritemap-v9-bluepants_17
+  - first:
+      213: 8602623542081256487
+    second: player-spritemap-v9-bluepants_18
+  - first:
+      213: 3227732507614308896
+    second: player-spritemap-v9-bluepants_19
+  - first:
+      213: 2249891875174539244
+    second: player-spritemap-v9-bluepants_20
+  - first:
+      213: 6266268788897532043
+    second: player-spritemap-v9-bluepants_21
+  - first:
+      213: -8801292967289541858
+    second: player-spritemap-v9-bluepants_22
+  - first:
+      213: -894133438641110838
+    second: player-spritemap-v9-bluepants_23
+  - first:
+      213: -7919825912364811166
+    second: player-spritemap-v9-bluepants_24
+  - first:
+      213: -7341034438181235970
+    second: player-spritemap-v9-bluepants_25
+  - first:
+      213: 1892058542381307003
+    second: player-spritemap-v9-bluepants_26
+  - first:
+      213: -4924926173788367272
+    second: player-spritemap-v9-bluepants_27
+  - first:
+      213: -7994133364864981206
+    second: player-spritemap-v9-bluepants_28
+  - first:
+      213: 737799651633030345
+    second: player-spritemap-v9-bluepants_29
+  externalObjects: {}
+  serializedVersion: 13
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    flipGreenChannel: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMipmapLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 0
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 100
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  swizzle: 50462976
+  cookieLightType: 0
+  platformSettings:
+  - serializedVersion: 4
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: player-spritemap-v9-bluepants_0
+      rect:
+        serializedVersion: 2
+        x: 8
+        y: 152
+        width: 22
+        height: 45
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: affc9f3ae73e7eab0800000000000000
+      internalID: -4978760729978351622
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: player-spritemap-v9-bluepants_1
+      rect:
+        serializedVersion: 2
+        x: 48
+        y: 152
+        width: 22
+        height: 46
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b40ab55ee01307970800000000000000
+      internalID: 8750548016028164171
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: player-spritemap-v9-bluepants_2
+      rect:
+        serializedVersion: 2
+        x: 83
+        y: 152
+        width: 28
+        height: 30
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ee4a0ec80c6aa51e0800000000000000
+      internalID: -2208269321344342802
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: player-spritemap-v9-bluepants_3
+      rect:
+        serializedVersion: 2
+        x: 131
+        y: 152
+        width: 29
+        height: 44
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 3bd40f4763c7d7ec0800000000000000
+      internalID: -3567558756475581005
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: player-spritemap-v9-bluepants_4
+      rect:
+        serializedVersion: 2
+        x: 177
+        y: 152
+        width: 33
+        height: 44
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b497665e3b639dfc0800000000000000
+      internalID: -3469681891636512437
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: player-spritemap-v9-bluepants_5
+      rect:
+        serializedVersion: 2
+        x: 224
+        y: 152
+        width: 29
+        height: 44
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c1651027282d8f020800000000000000
+      internalID: 2375880261138208284
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: player-spritemap-v9-bluepants_6
+      rect:
+        serializedVersion: 2
+        x: 270
+        y: 152
+        width: 29
+        height: 44
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d7e9cbe4d6e1db340800000000000000
+      internalID: 4881091025960738429
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: player-spritemap-v9-bluepants_7
+      rect:
+        serializedVersion: 2
+        x: 318
+        y: 151
+        width: 22
+        height: 46
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b5aadb10c5d6841a0800000000000000
+      internalID: -6825084993346360741
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: player-spritemap-v9-bluepants_8
+      rect:
+        serializedVersion: 2
+        x: 365
+        y: 152
+        width: 21
+        height: 44
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: f74628f104ca1eda0800000000000000
+      internalID: -5917259043981597569
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: player-spritemap-v9-bluepants_9
+      rect:
+        serializedVersion: 2
+        x: 3
+        y: 100
+        width: 30
+        height: 41
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: eec66c16fbc631090800000000000000
+      internalID: -8064982938455479058
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: player-spritemap-v9-bluepants_10
+      rect:
+        serializedVersion: 2
+        x: 39
+        y: 101
+        width: 30
+        height: 41
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 15a2d25647d73eac0800000000000000
+      internalID: -3827077319467652527
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: player-spritemap-v9-bluepants_11
+      rect:
+        serializedVersion: 2
+        x: 85
+        y: 102
+        width: 29
+        height: 32
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: e785edf3dddcbf820800000000000000
+      internalID: 2953180330814494846
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: player-spritemap-v9-bluepants_12
+      rect:
+        serializedVersion: 2
+        x: 131
+        y: 101
+        width: 24
+        height: 49
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 6ac14f765cec55d50800000000000000
+      internalID: 6725508965795634342
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: player-spritemap-v9-bluepants_13
+      rect:
+        serializedVersion: 2
+        x: 178
+        y: 101
+        width: 31
+        height: 49
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 649d76cd6e28bf690800000000000000
+      internalID: -7567310820814104250
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: player-spritemap-v9-bluepants_14
+      rect:
+        serializedVersion: 2
+        x: 225
+        y: 101
+        width: 26
+        height: 49
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 4426010f96ec43fb0800000000000000
+      internalID: -4668879959281868220
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: player-spritemap-v9-bluepants_15
+      rect:
+        serializedVersion: 2
+        x: 271
+        y: 101
+        width: 23
+        height: 49
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 4a5ba0dcecf8ab3b0800000000000000
+      internalID: -5495922276886202972
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: player-spritemap-v9-bluepants_16
+      rect:
+        serializedVersion: 2
+        x: 1
+        y: 58
+        width: 39
+        height: 29
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 40d36fe3b1ecaf2d0800000000000000
+      internalID: -3244053965151257340
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: player-spritemap-v9-bluepants_17
+      rect:
+        serializedVersion: 2
+        x: 48
+        y: 52
+        width: 39
+        height: 18
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a4646b043308c0d20800000000000000
+      internalID: 3246110389044659786
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: player-spritemap-v9-bluepants_18
+      rect:
+        serializedVersion: 2
+        x: 94
+        y: 52
+        width: 28
+        height: 35
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 72c7a2a6888a26770800000000000000
+      internalID: 8602623542081256487
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: player-spritemap-v9-bluepants_19
+      rect:
+        serializedVersion: 2
+        x: 139
+        y: 52
+        width: 37
+        height: 35
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 02ae45a4d953bcc20800000000000000
+      internalID: 3227732507614308896
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: player-spritemap-v9-bluepants_20
+      rect:
+        serializedVersion: 2
+        x: 186
+        y: 52
+        width: 32
+        height: 35
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: cefd0d27db8393f10800000000000000
+      internalID: 2249891875174539244
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: player-spritemap-v9-bluepants_21
+      rect:
+        serializedVersion: 2
+        x: 232
+        y: 52
+        width: 28
+        height: 35
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b88ca5d634246f650800000000000000
+      internalID: 6266268788897532043
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: player-spritemap-v9-bluepants_22
+      rect:
+        serializedVersion: 2
+        x: 1
+        y: 2
+        width: 34
+        height: 38
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: e1b20907da68bd580800000000000000
+      internalID: -8801292967289541858
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: player-spritemap-v9-bluepants_23
+      rect:
+        serializedVersion: 2
+        x: 44
+        y: 2
+        width: 36
+        height: 37
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ac08ff7ff566793f0800000000000000
+      internalID: -894133438641110838
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: player-spritemap-v9-bluepants_24
+      rect:
+        serializedVersion: 2
+        x: 96
+        y: 2
+        width: 32
+        height: 38
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 26cbf823b40271290800000000000000
+      internalID: -7919825912364811166
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: player-spritemap-v9-bluepants_25
+      rect:
+        serializedVersion: 2
+        x: 146
+        y: 2
+        width: 23
+        height: 38
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ef25c4ca2186f1a90800000000000000
+      internalID: -7341034438181235970
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: player-spritemap-v9-bluepants_26
+      rect:
+        serializedVersion: 2
+        x: 185
+        y: 2
+        width: 33
+        height: 38
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b7491e04831f14a10800000000000000
+      internalID: 1892058542381307003
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: player-spritemap-v9-bluepants_27
+      rect:
+        serializedVersion: 2
+        x: 228
+        y: 2
+        width: 37
+        height: 37
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 85612520db527abb0800000000000000
+      internalID: -4924926173788367272
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: player-spritemap-v9-bluepants_28
+      rect:
+        serializedVersion: 2
+        x: 281
+        y: 2
+        width: 27
+        height: 38
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a27ef143f022f0190800000000000000
+      internalID: -7994133364864981206
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: player-spritemap-v9-bluepants_29
+      rect:
+        serializedVersion: 2
+        x: 329
+        y: 2
+        width: 24
+        height: 38
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 9c46ef6cfd03d3a00800000000000000
+      internalID: 737799651633030345
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    customData: 
+    physicsShape: []
+    bones: []
+    spriteID: db8aa7f4e4b85154891d7f9456195186
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+    spriteCustomMetadata:
+      entries:
+      - key: SpriteEditor.SliceSettings
+        value: '{"sliceOnImport":false,"gridCellCount":{"x":1.0,"y":1.0},"gridSpriteSize":{"x":64.0,"y":64.0},"gridSpriteOffset":{"x":0.0,"y":0.0},"gridSpritePadding":{"x":0.0,"y":0.0},"pivot":{"x":0.5,"y":0.0},"pivotPixels":{"x":0.0,"y":0.0},"autoSlicingMethod":0,"spriteAlignment":7,"pivotUnitMode":0,"slicingType":0,"keepEmptyRects":false,"isAlternate":false}'
+    nameFileIdTable:
+      player-spritemap-v9-bluepants_0: -4978760729978351622
+      player-spritemap-v9-bluepants_1: 8750548016028164171
+      player-spritemap-v9-bluepants_10: -3827077319467652527
+      player-spritemap-v9-bluepants_11: 2953180330814494846
+      player-spritemap-v9-bluepants_12: 6725508965795634342
+      player-spritemap-v9-bluepants_13: -7567310820814104250
+      player-spritemap-v9-bluepants_14: -4668879959281868220
+      player-spritemap-v9-bluepants_15: -5495922276886202972
+      player-spritemap-v9-bluepants_16: -3244053965151257340
+      player-spritemap-v9-bluepants_17: 3246110389044659786
+      player-spritemap-v9-bluepants_18: 8602623542081256487
+      player-spritemap-v9-bluepants_19: 3227732507614308896
+      player-spritemap-v9-bluepants_2: -2208269321344342802
+      player-spritemap-v9-bluepants_20: 2249891875174539244
+      player-spritemap-v9-bluepants_21: 6266268788897532043
+      player-spritemap-v9-bluepants_22: -8801292967289541858
+      player-spritemap-v9-bluepants_23: -894133438641110838
+      player-spritemap-v9-bluepants_24: -7919825912364811166
+      player-spritemap-v9-bluepants_25: -7341034438181235970
+      player-spritemap-v9-bluepants_26: 1892058542381307003
+      player-spritemap-v9-bluepants_27: -4924926173788367272
+      player-spritemap-v9-bluepants_28: -7994133364864981206
+      player-spritemap-v9-bluepants_29: 737799651633030345
+      player-spritemap-v9-bluepants_3: -3567558756475581005
+      player-spritemap-v9-bluepants_4: -3469681891636512437
+      player-spritemap-v9-bluepants_5: 2375880261138208284
+      player-spritemap-v9-bluepants_6: 4881091025960738429
+      player-spritemap-v9-bluepants_7: -6825084993346360741
+      player-spritemap-v9-bluepants_8: -5917259043981597569
+      player-spritemap-v9-bluepants_9: -8064982938455479058
+  mipmapLimitGroupName: 
+  pSDRemoveMatte: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

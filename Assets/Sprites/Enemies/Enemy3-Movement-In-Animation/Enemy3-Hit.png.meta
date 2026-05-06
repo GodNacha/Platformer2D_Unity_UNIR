@@ -46,7 +46,7 @@ TextureImporter:
   maxTextureSize: 2048
   textureSettings:
     serializedVersion: 2
-    filterMode: 1
+    filterMode: 0
     aniso: 1
     mipBias: 0
     wrapU: 1
@@ -112,12 +112,12 @@ TextureImporter:
       name: Enemy3-Hit_0
       rect:
         serializedVersion: 2
-        x: 10
-        y: 6
-        width: 43
-        height: 55
-      alignment: 0
-      pivot: {x: 0, y: 0}
+        x: 11
+        y: 7
+        width: 41
+        height: 53
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -134,12 +134,12 @@ TextureImporter:
       name: Enemy3-Hit_1
       rect:
         serializedVersion: 2
-        x: 77
-        y: 8
-        width: 45
-        height: 50
-      alignment: 0
-      pivot: {x: 0, y: 0}
+        x: 78
+        y: 9
+        width: 43
+        height: 48
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -156,12 +156,12 @@ TextureImporter:
       name: Enemy3-Hit_2
       rect:
         serializedVersion: 2
-        x: 142
-        y: 8
-        width: 45
-        height: 51
-      alignment: 0
-      pivot: {x: 0, y: 0}
+        x: 143
+        y: 9
+        width: 43
+        height: 49
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -178,12 +178,12 @@ TextureImporter:
       name: Enemy3-Hit_3
       rect:
         serializedVersion: 2
-        x: 203
-        y: 6
-        width: 43
-        height: 55
-      alignment: 0
-      pivot: {x: 0, y: 0}
+        x: 204
+        y: 7
+        width: 41
+        height: 53
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -200,7 +200,7 @@ TextureImporter:
     customData: 
     physicsShape: []
     bones: []
-    spriteID: 
+    spriteID: d361d6c586fbd784784ffaed88a0b765
     internalID: 0
     vertices: []
     indices: 
@@ -208,7 +208,9 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     spriteCustomMetadata:
-      entries: []
+      entries:
+      - key: SpriteEditor.SliceSettings
+        value: '{"sliceOnImport":false,"gridCellCount":{"x":1.0,"y":1.0},"gridSpriteSize":{"x":64.0,"y":64.0},"gridSpriteOffset":{"x":0.0,"y":0.0},"gridSpritePadding":{"x":0.0,"y":0.0},"pivot":{"x":0.5,"y":0.0},"pivotPixels":{"x":0.0,"y":0.0},"autoSlicingMethod":0,"spriteAlignment":7,"pivotUnitMode":0,"slicingType":0,"keepEmptyRects":false,"isAlternate":false}'
     nameFileIdTable:
       Enemy3-Hit_0: -2791142785530751433
       Enemy3-Hit_1: -45276988288526582

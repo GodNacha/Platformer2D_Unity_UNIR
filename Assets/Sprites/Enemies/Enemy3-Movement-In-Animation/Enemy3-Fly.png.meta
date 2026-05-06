@@ -58,7 +58,7 @@ TextureImporter:
   maxTextureSize: 2048
   textureSettings:
     serializedVersion: 2
-    filterMode: 1
+    filterMode: 0
     aniso: 1
     mipBias: 0
     wrapU: 1
@@ -124,12 +124,12 @@ TextureImporter:
       name: Enemy3-Fly_0
       rect:
         serializedVersion: 2
-        x: 16
-        y: 6
-        width: 39
-        height: 55
-      alignment: 0
-      pivot: {x: 0, y: 0}
+        x: 17
+        y: 7
+        width: 37
+        height: 53
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -146,12 +146,12 @@ TextureImporter:
       name: Enemy3-Fly_1
       rect:
         serializedVersion: 2
-        x: 79
-        y: 6
-        width: 39
-        height: 55
-      alignment: 0
-      pivot: {x: 0, y: 0}
+        x: 80
+        y: 7
+        width: 37
+        height: 53
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -168,12 +168,12 @@ TextureImporter:
       name: Enemy3-Fly_2
       rect:
         serializedVersion: 2
-        x: 141
-        y: 6
-        width: 40
-        height: 55
-      alignment: 0
-      pivot: {x: 0, y: 0}
+        x: 142
+        y: 7
+        width: 38
+        height: 53
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -190,12 +190,12 @@ TextureImporter:
       name: Enemy3-Fly_3
       rect:
         serializedVersion: 2
-        x: 204
-        y: 7
-        width: 41
-        height: 54
-      alignment: 0
-      pivot: {x: 0, y: 0}
+        x: 205
+        y: 8
+        width: 39
+        height: 52
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -212,12 +212,12 @@ TextureImporter:
       name: Enemy3-Fly_4
       rect:
         serializedVersion: 2
-        x: 269
-        y: 8
-        width: 41
-        height: 53
-      alignment: 0
-      pivot: {x: 0, y: 0}
+        x: 270
+        y: 9
+        width: 39
+        height: 51
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -234,12 +234,12 @@ TextureImporter:
       name: Enemy3-Fly_5
       rect:
         serializedVersion: 2
-        x: 334
-        y: 9
-        width: 41
-        height: 52
-      alignment: 0
-      pivot: {x: 0, y: 0}
+        x: 335
+        y: 10
+        width: 39
+        height: 50
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -256,12 +256,12 @@ TextureImporter:
       name: Enemy3-Fly_6
       rect:
         serializedVersion: 2
-        x: 399
-        y: 8
-        width: 41
-        height: 53
-      alignment: 0
-      pivot: {x: 0, y: 0}
+        x: 400
+        y: 9
+        width: 39
+        height: 51
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -278,12 +278,12 @@ TextureImporter:
       name: Enemy3-Fly_7
       rect:
         serializedVersion: 2
-        x: 464
-        y: 7
-        width: 40
-        height: 54
-      alignment: 0
-      pivot: {x: 0, y: 0}
+        x: 465
+        y: 8
+        width: 38
+        height: 52
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -300,7 +300,7 @@ TextureImporter:
     customData: 
     physicsShape: []
     bones: []
-    spriteID: 
+    spriteID: 81399594d0b76464f88d4340bccffc84
     internalID: 0
     vertices: []
     indices: 
@@ -308,7 +308,9 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     spriteCustomMetadata:
-      entries: []
+      entries:
+      - key: SpriteEditor.SliceSettings
+        value: '{"sliceOnImport":false,"gridCellCount":{"x":1.0,"y":1.0},"gridSpriteSize":{"x":64.0,"y":64.0},"gridSpriteOffset":{"x":0.0,"y":0.0},"gridSpritePadding":{"x":0.0,"y":0.0},"pivot":{"x":0.5,"y":0.0},"pivotPixels":{"x":0.0,"y":0.0},"autoSlicingMethod":0,"spriteAlignment":7,"pivotUnitMode":0,"slicingType":0,"keepEmptyRects":false,"isAlternate":false}'
     nameFileIdTable:
       Enemy3-Fly_0: 1580441614216361810
       Enemy3-Fly_1: 3768569184673848441
