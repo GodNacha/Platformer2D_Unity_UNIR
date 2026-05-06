@@ -3,20 +3,24 @@ using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-[RequireComponent(typeof(Rigidbody))] //Agrega el componente Rigidbody al GameObject si no lo tiene, esto unicamente cuando se agregar el script al GameObject
+[RequireComponent(typeof(Rigidbody2D))] //Agrega el componente Rigidbody al GameObject si no lo tiene, esto unicamente cuando se agregar el script al GameObject
 public class CharacterController : MonoBehaviour
 {
-    [Header("Inputs")]
-    [SerializeField] InputActionReference move;
-    [SerializeField] InputActionReference jump;
-    [SerializeField] InputActionReference attack;
-
     Rigidbody2D rb;
     Animator anim;
     SpriteRenderer spriteRenderer;
 
+
     [Header("Stats")]
     [SerializeField] public float movementSpeed = 5f;
+    [SerializeField] public float jumpVelocity = 3f;
+
+    [Header("Srite Settings")]
+    [SerializeField] public bool facingRightByDefault = true;
+
+    [Header("Ground Check")]
+    [SerializeField] public float groundCheckDistance = 0.2f;
+    [SerializeField] LayerMask groundLayerMask;
 
     private void Awake()
     {
@@ -24,25 +28,6 @@ public class CharacterController : MonoBehaviour
         anim = GetComponent<Animator>();
         spriteRenderer = GetComponent<SpriteRenderer>();
 
-        move.action.performed += OnMove;
-        move.action.canceled += OnMove;
-        move.action.started += OnMove;
-
-        jump.action.performed += OnJump;
-        attack.action.performed += OnAttack;
-    }
-
-    private void OnEnable()
-    {
-        move.action.Enable();
-        jump.action.Enable();
-        attack.action.Enable();
-    }
-
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
-    {
-        rb = GetComponent<Rigidbody2D>();
     }
 
 
@@ -56,31 +41,51 @@ public class CharacterController : MonoBehaviour
 
         if (isMoving)
         {
-            spriteRenderer.flipX = rawMove.x < 0;
+
+            bool movingLeft = rawMove.x < 0; // Esto para que los sprite que tiuenen una posición default/original mirando a la derecha, se volteen al moverse a la izquierda, y viceversa
+
+            spriteRenderer.flipX = facingRightByDefault
+                ? movingLeft
+                : !movingLeft;
+
         }
+
+        anim.SetBool("IsGrounded", IsGrounded()); //Animación volando en el aire
 
     }
 
     Vector2 rawMove;
-    private void OnMove(InputAction.CallbackContext context)
+    public void SetRawMove (Vector2 rawMove)
     {
-        rawMove = context.ReadValue<Vector2>();
-    }
-    private void OnAttack(InputAction.CallbackContext context)
-    {
-        throw new NotImplementedException();
+        this.rawMove = rawMove;
     }
 
-    private void OnJump(InputAction.CallbackContext context)
+    bool IsGrounded()
     {
-        throw new NotImplementedException();
+       RaycastHit2D hit = Physics2D.Raycast(transform.position, Vector2.down, groundCheckDistance, groundLayerMask); //Esto es para detectar si el personaje esta tocando el suelo, se puede ajustar la distancia del raycast dependiendo de la altura del personaje     
+
+        return hit & hit.collider != null;
     }
 
-    private void OnDisable()
+    void OnDrawGizmos()
     {
-        move.action.Disable();
-        jump.action.Disable();
-        attack.action.Disable();
+        
+        Gizmos.color = IsGrounded() ? Color.green : Color.red; // Usamos la función lógica para decidir el color
+
+        Gizmos.DrawLine(transform.position, transform.position + (Vector3.down * groundCheckDistance)); // Dibuja una línea desde la posición del personaje hacia abajo, con la longitud de groundCheckDistance, para visualizar el raycast en la escena y hacer los ajustes pertinentes
     }
+
+    public void Jump()
+    {
+        if (IsGrounded())
+        {
+            anim.SetTrigger("Jump"); //Animación de salto
+            rb.linearVelocityY = jumpVelocity;
+            
+        }
+        
+    }
+
+
 }
 
