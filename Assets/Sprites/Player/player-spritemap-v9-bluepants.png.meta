@@ -846,6 +846,28 @@ TextureImporter:
       indices: 
       edges: []
       weights: []
+    - serializedVersion: 2
+      name: player-spritemap-v9-bluepants_30
+      rect:
+        serializedVersion: 2
+        x: 14
+        y: 186
+        width: 11
+        height: 12
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: fb894289927bab04cb64c61fb33a15ff
+      internalID: 159899949
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     outline: []
     customData: 
     physicsShape: []
@@ -886,6 +908,7 @@ TextureImporter:
       player-spritemap-v9-bluepants_28: -7994133364864981206
       player-spritemap-v9-bluepants_29: 737799651633030345
       player-spritemap-v9-bluepants_3: -3567558756475581005
+      player-spritemap-v9-bluepants_30: 159899949
       player-spritemap-v9-bluepants_4: -3469681891636512437
       player-spritemap-v9-bluepants_5: 2375880261138208284
       player-spritemap-v9-bluepants_6: 4881091025960738429

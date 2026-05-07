@@ -32,7 +32,6 @@ public class CharacterController : MonoBehaviour
     [SerializeField] MonoBehaviour[] scriptsToDisableOnDeath; //Aquí se pueden agregar los scripts que se quieran desactivar al morir, como el script de movimiento, ataque, etc, para evitar que el personaje siga moviéndose o atacando después de morir
 
     private bool canMove = true;
-    public bool dead = false;
     private bool attacking = false;
     bool canJump = true;
     bool canAttack = true;
@@ -42,11 +41,9 @@ public class CharacterController : MonoBehaviour
     {
         rb = GetComponent<Rigidbody2D>();
         anim = GetComponent<Animator>();
-        spriteRenderer = GetComponent<SpriteRenderer>();
+        spriteRenderer = GetComponent<SpriteRenderer>();      
 
-        
-
-        dead = false;
+       
     }
 
     private void Start()
@@ -54,7 +51,7 @@ public class CharacterController : MonoBehaviour
         rightHitCollider.enabled = false;
         leftHitCollider.enabled = false;
 
-        dead = false;
+        
     }
 
 
@@ -167,57 +164,7 @@ public class CharacterController : MonoBehaviour
 
     #endregion  
 
-    public void Damage()
-    {
-        if (!dead)
-        {
-            lifes--;
-            if (lifes <= 0)
-            {
-                Dead();
-
-                //Agregar efecto de sonido
-
-            }
-            else
-            {
-                anim.SetTrigger("Hit"); //Animación de recibir daño
-
-                //Agregar efecto de sonido
-            }
-        }
-    }
-        
-    public void Dead()
-    {
-        dead = true;
     
-        foreach (var script in scriptsToDisableOnDeath) //Desactiva los scripts que se hayan agregado al array scriptsToDisableOnDeath, para evitar que el personaje siga moviéndose o atacando después de morir
-        {
-            script.enabled = false;
-        }
-
-        anim.SetTrigger("Dead"); //Animación de muerte      
-
-        SetRawMove(Vector2.zero); //Detiene el movimiento horizontal del personaje al morir, para que no siga moviéndose después de la animación de muerte
-
-        StartCoroutine(Destroy()); //Inicia la corrutina para destruir el GameObject después de un tiempo, para que la animación de muerte se reproduzca completamente antes de eliminar el personaje de la escena
-
-    }
-
-    IEnumerator Destroy()
-    {
-        yield return new WaitForSeconds(4f);
-        Destroy(gameObject); //Destruye el GameObject después de un tiempo, para que la animación de muerte se reproduzca completamente antes de eliminar el personaje de la escena
-    }
-
-    private void OnTriggerEnter2D(Collider2D collision)
-    {
-       if (collision.CompareTag("DeadZone")) 
-       {
-            Dead();
-       }
-    }
 
 
 }
