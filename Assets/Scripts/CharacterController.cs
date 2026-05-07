@@ -7,7 +7,7 @@ using UnityEngine.InputSystem;
 [RequireComponent(typeof(Rigidbody2D))] //Agrega el componente Rigidbody al GameObject si no lo tiene, esto unicamente cuando se agregar el script al GameObject
 public class CharacterController : MonoBehaviour
 {
-    Rigidbody2D rb;
+    public Rigidbody2D rb;
     Animator anim;
     SpriteRenderer spriteRenderer;
 
@@ -31,10 +31,10 @@ public class CharacterController : MonoBehaviour
     [Header("Script Disables")]
     [SerializeField] MonoBehaviour[] scriptsToDisableOnDeath; //Aquí se pueden agregar los scripts que se quieran desactivar al morir, como el script de movimiento, ataque, etc, para evitar que el personaje siga moviéndose o atacando después de morir
 
-    private bool canMove = true;
-    private bool attacking = false;
+    public bool canMove = true;
+    public bool attacking = false;
     bool canJump = true;
-    bool canAttack = true;
+
 
 
     private void Awake()
@@ -85,13 +85,21 @@ public class CharacterController : MonoBehaviour
     Vector2 rawMove;
     public void SetRawMove(Vector2 rawMove)
     {
-        this.rawMove = rawMove;
+        if (canMove)
+        {
+            this.rawMove = rawMove;
+        }
+        else
+        {
+            this.rawMove = Vector2.zero; //Si no se puede mover, se establece el movimiento en cero para que el personaje no siga moviéndose
+        }
+
     }
     #endregion
 
     #region Salto 
 
-    bool IsGrounded()
+    public bool IsGrounded()
     {
         RaycastHit2D hit = Physics2D.Raycast(transform.position, Vector2.down, groundCheckDistance, groundLayerMask); //Esto es para detectar si el personaje esta tocando el suelo, se puede ajustar la distancia del raycast dependiendo de la altura del personaje     
 
@@ -119,23 +127,7 @@ public class CharacterController : MonoBehaviour
 
     #endregion
 
-    #region Ataque
-    public void Attack()
-    {
-        if (attacking) return; //Si el personaje ya esta atacando, no se puede iniciar otro ataque
-
-        if (IsGrounded() && canAttack)
-        {
-            anim.SetTrigger("Attack"); //Animación de ataque
-            attacking = true;
-        }
-        else
-        {
-            anim.SetTrigger("Attack"); //Animación de ataque en el aire
-            attacking = true;
-        }
-
-    }
+    #region Ataque Evento
 
     const float desactivatehitDelay = 0.25f; //Duración de la animación de ataque, se puede ajustar dependiendo de la animación que se use
     public void OnAttackAnimation()
@@ -158,13 +150,15 @@ public class CharacterController : MonoBehaviour
     {
         leftHitCollider.enabled = false;
         rightHitCollider.enabled = false;
-        attacking = false;
+        
     }
+
    
 
-    #endregion  
 
-    
+    #endregion
+
+
 
 
 }

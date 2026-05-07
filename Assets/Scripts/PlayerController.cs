@@ -18,6 +18,7 @@ public class PlayerController : MonoBehaviour
 
 
     private bool dead = false;
+    bool canAttack = true;
 
 
     [Header("Disable Scripts After Dead")]
@@ -63,7 +64,7 @@ public class PlayerController : MonoBehaviour
     }
     private void OnAttack(InputAction.CallbackContext context)
     {
-        characterController2D.Attack();
+        Attack();
     }
 
     private void OnJump(InputAction.CallbackContext context)
@@ -77,6 +78,36 @@ public class PlayerController : MonoBehaviour
 
         coins++;
         textCoins.text = "X " + coins;
+    }
+
+    public void Attack()
+    {
+        if (characterController2D.attacking == true) return; //Si el personaje ya esta atacando, no se puede iniciar otro ataque
+
+        characterController2D.canMove = false;
+
+        if (characterController2D.IsGrounded() && canAttack)
+        {
+            anim.SetTrigger("Attack"); //Animación de ataque
+            characterController2D.attacking = true;
+            StartCoroutine(AfterAttack());
+
+        }
+        else
+        {
+            anim.SetTrigger("Attack"); //Animación de ataque en el aire
+            characterController2D.attacking = true;
+            StartCoroutine(AfterAttack());
+
+        }
+
+    }
+
+    public IEnumerator AfterAttack()
+    {
+        yield return new WaitForSeconds(0.8f); //Tiempo de espera después de atacar, para que el enemigo no pueda atacar constantemente sin esperar un tiempo entre ataques, esto se puede ajustar dependiendo de la velocidad de ataque que se quiera para el enemigo
+        characterController2D.attacking = false;
+        characterController2D.canMove = true;
     }
 
     public void Damage()

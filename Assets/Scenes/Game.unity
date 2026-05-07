@@ -2193,6 +2193,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b5c65fb080eb71c409ab686474f1c0fe, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::CharacterController
+  rb: {fileID: 0}
   movementSpeed: 2
   jumpVelocity: 4
   lifes: 3
@@ -2205,6 +2206,8 @@ MonoBehaviour:
   leftHitCollider: {fileID: 1494147637}
   scriptsToDisableOnDeath:
   - {fileID: 370565205}
+  canMove: 1
+  attacking: 0
 --- !u!50 &370565204
 Rigidbody2D:
   serializedVersion: 5
@@ -6727,6 +6730,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b5c65fb080eb71c409ab686474f1c0fe, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::CharacterController
+  rb: {fileID: 0}
   movementSpeed: 1
   jumpVelocity: 3
   lifes: 3
@@ -6739,6 +6743,8 @@ MonoBehaviour:
   leftHitCollider: {fileID: 1756582963}
   scriptsToDisableOnDeath:
   - {fileID: 1304918206}
+  canMove: 1
+  attacking: 0
 --- !u!95 &1304918208
 Animator:
   serializedVersion: 7
