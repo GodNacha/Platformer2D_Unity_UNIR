@@ -12,8 +12,6 @@ public class AIController : MonoBehaviour
 
     private void Update()
     {
-        if (characterController2D.dead) return; //Si el personaje está muerto, no se ejecuta el código de movimiento
-
         Vector2 rawMove = Vector2.zero;
 
         if (target)

@@ -28,6 +28,9 @@ public class CharacterController : MonoBehaviour
     [SerializeField] GameObject rightHitCollider;
     [SerializeField] GameObject leftHitCollider;
 
+    [Header("Script Disables")]
+    [SerializeField] MonoBehaviour[] scriptsToDisableOnDeath; //Aquí se pueden agregar los scripts que se quieran desactivar al morir, como el script de movimiento, ataque, etc, para evitar que el personaje siga moviéndose o atacando después de morir
+
     private bool canMove = true;
     public bool dead = false;
     private bool attacking = false;
@@ -130,27 +133,30 @@ public class CharacterController : MonoBehaviour
 
     }
 
+    const float desactivatehitDelay = 0.25f; //Duración de la animación de ataque, se puede ajustar dependiendo de la animación que se use
     public void OnAttackAnimation()
     {
         if (spriteRenderer.flipX) //Si el sprite esta volteado, se activa el hit collider de la izquierda, de lo contrario se activa el hit collider de la derecha
         {
-            leftHitCollider.SetActive(true);        
+            leftHitCollider.SetActive(true); 
+            Invoke(nameof(DesactivateHits), desactivatehitDelay); //Invoca la función DesactivateHits después de un tiempo, para desactivar los hit colliders después de que se haya completado la animación de ataque
         }
         else
         {           
             rightHitCollider.SetActive(true);
+            Invoke(nameof(DesactivateHits), desactivatehitDelay);
         }
 
         Debug.Log("Golpe dado"); //Aquí es donde se haría el daño al enemigo, o la detección de colisiones con el enemigo para aplicar el daño, dependiendo de la implementación del sistema de combate que se quiera hacer
     }
 
-    public void OnAttackAnimationEnd()
+    void DesactivateHits()
     {
         leftHitCollider.SetActive(false);
         rightHitCollider.SetActive(false);
-
         attacking = false;
     }
+   
 
     #endregion  
 
@@ -162,7 +168,7 @@ public class CharacterController : MonoBehaviour
             if (lifes <= 0)
             {
                 Dead();
-                BlockActions(); //Bloquea las acciones del personaje al morir, para que no pueda moverse, saltar o atacar después de morir
+
                 //Agregar efecto de sonido
 
             }
@@ -174,26 +180,22 @@ public class CharacterController : MonoBehaviour
             }
         }
     }
-
         
-
     public void Dead()
     {
         dead = true;
+    
+        foreach (var script in scriptsToDisableOnDeath) //Desactiva los scripts que se hayan agregado al array scriptsToDisableOnDeath, para evitar que el personaje siga moviéndose o atacando después de morir
+        {
+            script.enabled = false;
+        }
 
-        anim.SetBool("Dead", true); //Animación de muerte      
+        anim.SetTrigger("Dead"); //Animación de muerte      
 
         SetRawMove(Vector2.zero); //Detiene el movimiento horizontal del personaje al morir, para que no siga moviéndose después de la animación de muerte
 
         StartCoroutine(Destroy()); //Inicia la corrutina para destruir el GameObject después de un tiempo, para que la animación de muerte se reproduzca completamente antes de eliminar el personaje de la escena
 
-    }
-
-    void BlockActions()
-    {
-        canMove = false;
-        canJump = false;
-        canAttack = false;
     }
 
     IEnumerator Destroy()
