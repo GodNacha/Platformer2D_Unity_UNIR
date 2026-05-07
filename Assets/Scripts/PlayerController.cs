@@ -39,7 +39,7 @@ public class PlayerController : MonoBehaviour
     }
     private void OnAttack(InputAction.CallbackContext context)
     {
-        throw new NotImplementedException();
+        characterController2D.Attack();
     }
 
     private void OnJump(InputAction.CallbackContext context)
