@@ -25,8 +25,8 @@ public class CharacterController : MonoBehaviour
     [SerializeField] LayerMask groundLayerMask;
 
     [Header("Combat")]
-    [SerializeField] GameObject rightHitCollider;
-    [SerializeField] GameObject leftHitCollider;
+    [SerializeField] public Collider2D rightHitCollider;
+    [SerializeField] public Collider2D leftHitCollider;
 
     [Header("Script Disables")]
     [SerializeField] MonoBehaviour[] scriptsToDisableOnDeath; //Aquí se pueden agregar los scripts que se quieran desactivar al morir, como el script de movimiento, ataque, etc, para evitar que el personaje siga moviéndose o atacando después de morir
@@ -44,8 +44,15 @@ public class CharacterController : MonoBehaviour
         anim = GetComponent<Animator>();
         spriteRenderer = GetComponent<SpriteRenderer>();
 
-        rightHitCollider.SetActive(false); 
-        leftHitCollider.SetActive(false);
+        
+
+        dead = false;
+    }
+
+    private void Start()
+    {
+        rightHitCollider.enabled = false;
+        leftHitCollider.enabled = false;
 
         dead = false;
     }
@@ -138,12 +145,12 @@ public class CharacterController : MonoBehaviour
     {
         if (spriteRenderer.flipX) //Si el sprite esta volteado, se activa el hit collider de la izquierda, de lo contrario se activa el hit collider de la derecha
         {
-            leftHitCollider.SetActive(true); 
+            leftHitCollider.enabled = true;
             Invoke(nameof(DesactivateHits), desactivatehitDelay); //Invoca la función DesactivateHits después de un tiempo, para desactivar los hit colliders después de que se haya completado la animación de ataque
         }
         else
         {           
-            rightHitCollider.SetActive(true);
+            rightHitCollider.enabled = true;
             Invoke(nameof(DesactivateHits), desactivatehitDelay);
         }
 
@@ -152,8 +159,8 @@ public class CharacterController : MonoBehaviour
 
     void DesactivateHits()
     {
-        leftHitCollider.SetActive(false);
-        rightHitCollider.SetActive(false);
+        leftHitCollider.enabled = false;
+        rightHitCollider.enabled = false;
         attacking = false;
     }
    

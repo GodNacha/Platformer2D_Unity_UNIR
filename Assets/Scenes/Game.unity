@@ -1661,8 +1661,8 @@ MonoBehaviour:
   groundLayerMask:
     serializedVersion: 2
     m_Bits: 8
-  rightHitCollider: {fileID: 652903041}
-  leftHitCollider: {fileID: 1494147635}
+  rightHitCollider: {fileID: 652903043}
+  leftHitCollider: {fileID: 1494147637}
   scriptsToDisableOnDeath:
   - {fileID: 370565205}
   dead: 0
@@ -4102,7 +4102,7 @@ Rigidbody2D:
     m_Bits: 0
   m_Interpolate: 0
   m_SleepingMode: 1
-  m_CollisionDetection: 0
+  m_CollisionDetection: 1
   m_Constraints: 4
 --- !u!114 &1304918206
 MonoBehaviour:
