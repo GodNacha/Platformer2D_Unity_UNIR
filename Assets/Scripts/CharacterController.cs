@@ -16,6 +16,7 @@ public class CharacterController : MonoBehaviour
     [SerializeField] public float movementSpeed = 5f;
     [SerializeField] public float jumpVelocity = 3f;
     [SerializeField] public int lifes = 3;
+    [SerializeField] public bool isEnemy = false; //Esto es para diferenciar entre el jugador y los enemigos.
 
     [Header("Srite Settings")]
     [SerializeField] public bool facingRightByDefault = true;
@@ -58,9 +59,20 @@ public class CharacterController : MonoBehaviour
     const float Threshold = 0.1f;
     void Update()
     {
-        if (!canMove) return; //Si el personaje no puede moverse, no se ejecuta el código de movimiento
+        if (canMove)
+        {
+            rb.linearVelocityX = rawMove.x * movementSpeed;
+        }
+        else
+        {       
+            if (!isEnemy)
+            {
+                rb.linearVelocityX = 0; //El jugador se queda quieto al atacar.
+            }
+            
+        }
 
-        rb.linearVelocityX = rawMove.x * movementSpeed;
+
         bool isMoving = Mathf.Abs(rawMove.x) > Threshold;
 
         anim.SetBool("IsRunning", isMoving);
@@ -89,9 +101,9 @@ public class CharacterController : MonoBehaviour
         {
             this.rawMove = rawMove;
         }
-        else
+        else       
         {
-            this.rawMove = Vector2.zero; //Si no se puede mover, se establece el movimiento en cero para que el personaje no siga moviéndose
+            this.rawMove = Vector2.zero; //Si no se puede mover, el rawMove se establece en cero para que el personaje no se mueva.
         }
 
     }

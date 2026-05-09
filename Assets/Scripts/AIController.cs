@@ -9,9 +9,12 @@ public class AIController : MonoBehaviour
     private bool dead = false;
     bool canAttack = true;
 
+    private int attackDirection = 1;
+
     [Header("Enemy Stats")]
     public int lifes = 3;
     public Animator anim;
+    public float impulseForce = 2.8f; //Fuerza del impulso al atacar
 
     [Header("Disable Scripts After Dead")]
     public MonoBehaviour[] scriptsToDisableOnDeath; //Aquí se pueden agregar los scripts que se quieran desactivar al morir, como el script de movimiento, ataque, etc, para evitar que el personaje siga moviéndose o atacando después de morir
@@ -39,9 +42,9 @@ public class AIController : MonoBehaviour
 
            if (Mathf.Abs(transform.position.x - target.position.x) < 0.5f) //Para que se quede quieto al llegar al target, y no se quede vibrando por estar cambiando constantemente de dirección
            {
-                rawMove = Vector2.zero;
+                rawMove = Vector2.zero; //Se queda quieto
                 Attack(); //Llama a la función Attack para que el enemigo ataque al jugador cuando esté lo suficientemente cerca, esto se puede ajustar dependiendo de la distancia que se quiera para que el enemigo ataque al jugador
-            }
+           }
 
         }
        
@@ -50,18 +53,15 @@ public class AIController : MonoBehaviour
 
     public void AttackImpulse()
     {
-        //Se impulsa hacia la derecha o izquierda dependiendo de la posición del target, para que el enemigo se impulse hacia el jugador al atacar, y no se quede quieto en su posición, esto se puede ajustar dependiendo de la distancia que se quiera que el enemigo se impulse al atacar
+        //Se impulsa hacia la derecha o izquierda dependiendo de la posición del target, para que el enemigo se impulse hacia el jugador al atacar, y no se quede quieto en su posición.
         if (target)
-        {
-            if (transform.position.x > target.position.x)
-            {
-                characterController2D.rb.linearVelocityX = -2f; //Impulso hacia la izquierda
-            }
-            else
-            {
-                characterController2D.rb.linearVelocityX = 2f; //Impulso hacia la derecha
-            }
+        {         
+            characterController2D.rb.linearVelocityX = impulseForce * attackDirection; // Impulso hacia la derecha o izquierda dependiendo de la posición del target.
+
+            Debug.Log("Impulso de ataque aplicado"); //Aquí es donde se aplicaría el impulso al enemigo al atacar, para que se impulse hacia el jugador, esto se puede ajustar dependiendo de la fuerza del impulso que se quiera para el enemigo al atacar
+
         }
+
     }
 
     public void Attack()
@@ -69,19 +69,21 @@ public class AIController : MonoBehaviour
         if (characterController2D.attacking == true) return; //Si el personaje ya esta atacando, no se puede iniciar otro ataque
 
         characterController2D.canMove = false;
+        characterController2D.attacking = true;
 
         if (characterController2D.IsGrounded() && canAttack)
         {
-            anim.SetTrigger("Attack"); //Animación de ataque
-            characterController2D.attacking = true;
+            // Guardar la dirección del ataque dependiendo de la posición del target/jugador
+            if (transform.position.x > target.position.x)
+            {
+                attackDirection = -1;
+            }
+            else
+            {
+                attackDirection = 1;
+            }
 
-            
-            StartCoroutine(AfterAttack());
-        }
-        else
-        {
-            anim.SetTrigger("Attack"); //Animación de ataque en el aire
-            characterController2D.attacking = true;
+            anim.SetTrigger("Attack"); //Animación de ataque
 
             StartCoroutine(AfterAttack());
         }
@@ -90,9 +92,19 @@ public class AIController : MonoBehaviour
 
     public IEnumerator AfterAttack()
     {
-        yield return new WaitForSeconds(1.5f); //Tiempo de espera después de atacar, para que el enemigo no pueda atacar constantemente sin esperar un tiempo entre ataques, esto se puede ajustar dependiendo de la velocidad de ataque que se quiera para el enemigo
+        anim.SetBool("IsRunning", false);
+        yield return new WaitForSeconds(1.5f); //Tiempo de espera después de atacar para recuperar movimiento y ataque.
         characterController2D.attacking = false;
         characterController2D.canMove = true;
+    }
+
+    public void CancelAttack()
+    {
+       // if (!characterController2D.attacking) return;
+
+        //Completar
+
+        
     }
 
 
@@ -101,7 +113,8 @@ public class AIController : MonoBehaviour
         if (!dead)
         {
             lifes--;
-            
+
+           // CancelAttack();
 
             if (lifes <= 0)
             {
