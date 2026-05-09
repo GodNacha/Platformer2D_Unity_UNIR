@@ -105,7 +105,7 @@ public class PlayerController : MonoBehaviour
 
     public IEnumerator AfterAttack()
     {
-        yield return new WaitForSeconds(0.7f); //Tiempo de espera después de atacar, para que el enemigo no pueda atacar constantemente sin esperar un tiempo entre ataques, esto se puede ajustar dependiendo de la velocidad de ataque que se quiera para el enemigo
+        yield return new WaitForSeconds(0.5f); //Tiempo de espera después de atacar, para que el enemigo no pueda atacar constantemente sin esperar un tiempo entre ataques, esto se puede ajustar dependiendo de la velocidad de ataque que se quiera para el enemigo
         characterController2D.attacking = false;
         characterController2D.canMove = true;
 
