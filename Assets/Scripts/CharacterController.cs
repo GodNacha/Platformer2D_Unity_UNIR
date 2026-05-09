@@ -36,15 +36,19 @@ public class CharacterController : MonoBehaviour
     public bool attacking = false;
     bool canJump = true;
 
+    [Header("References")]
+    GameManager gameManager;
+
 
 
     private void Awake()
     {
         rb = GetComponent<Rigidbody2D>();
         anim = GetComponent<Animator>();
-        spriteRenderer = GetComponent<SpriteRenderer>();      
+        spriteRenderer = GetComponent<SpriteRenderer>();     
+        gameManager = FindAnyObjectByType<GameManager>();
 
-       
+
     }
 
     private void Start()
@@ -59,13 +63,13 @@ public class CharacterController : MonoBehaviour
     const float Threshold = 0.1f;
     void Update()
     {
-        if (canMove)
+        if (canMove && !gameManager.endGame)
         {
             rb.linearVelocityX = rawMove.x * movementSpeed;
         }
         else
         {       
-            if (!isEnemy)
+            if (!isEnemy || gameManager.endGame)
             {
                 rb.linearVelocityX = 0; //El jugador se queda quieto al atacar.
             }

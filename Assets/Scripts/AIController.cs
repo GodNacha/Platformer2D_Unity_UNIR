@@ -16,6 +16,12 @@ public class AIController : MonoBehaviour
     public Animator anim;
     public float impulseForce = 2.8f; //Fuerza del impulso al atacar
 
+    [Header("Detection Range")]
+    [SerializeField] float detectionRange = 4f; //Rango de detección del enemigo para detectar al jugador
+    [SerializeField] float chestRange = 8f; 
+
+    private bool chesing = false; //Variable para saber si el enemigo está persiguiendo al jugador
+
     [Header("Disable Scripts After Dead")]
     public MonoBehaviour[] scriptsToDisableOnDeath; //Aquí se pueden agregar los scripts que se quieran desactivar al morir, como el script de movimiento, ataque, etc, para evitar que el personaje siga moviéndose o atacando después de morir
 
@@ -30,6 +36,24 @@ public class AIController : MonoBehaviour
         Vector2 rawMove = Vector2.zero;
 
         if (target)
+        {
+          float distanceToTarget = Vector2.Distance(transform.position, target.position);
+    
+            if (distanceToTarget <= detectionRange) //El enemigo empieza a perseguir al jugador si está dentro del rango de detección
+            {
+                 chesing = true; 
+            }
+            else
+            {
+                if (distanceToTarget >= chestRange) //El enemigo deja de perseguir al jugador si está fuera del rango de persecusión
+                {
+                    chesing = false;
+                }
+                     
+            }
+        }
+
+        if (target && chesing)
         {
            if (transform.position.x > target.position.x)
            {
@@ -46,9 +70,23 @@ public class AIController : MonoBehaviour
                 Attack(); //Llama a la función Attack para que el enemigo ataque al jugador cuando esté lo suficientemente cerca, esto se puede ajustar dependiendo de la distancia que se quiera para que el enemigo ataque al jugador
            }
 
+           
         }
-       
-            characterController2D.SetRawMove(rawMove);
+
+        characterController2D.SetRawMove(rawMove);
+    }
+
+    void OnDrawGizmos()
+    {
+        Gizmos.color = Color.red;
+
+        // Gizmo de rango circular para detectar al jugador
+        Gizmos.DrawWireSphere(transform.position, detectionRange);
+
+        Gizmos.color = Color.blue;
+
+        // Gizmo de rango circular para mostrar el rango de persecusión
+        Gizmos.DrawWireSphere(transform.position, chestRange);
     }
 
     public void AttackImpulse()

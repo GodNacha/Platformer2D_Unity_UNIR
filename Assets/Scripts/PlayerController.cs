@@ -12,7 +12,7 @@ public class PlayerController : MonoBehaviour
     public TextMeshProUGUI textCoins;
 
     [Header("Player Stats")]
-    [SerializeField] int coins = 0;
+    [SerializeField] public int coins = 0;
     [SerializeField] public int lifes = 3;
     [SerializeField] private Animator anim;
 
@@ -25,6 +25,7 @@ public class PlayerController : MonoBehaviour
     public MonoBehaviour[] scriptsToDisableOnDeath; //Aquí se pueden agregar los scripts que se quieran desactivar al morir, como el script de movimiento, ataque, etc, para evitar que el personaje siga moviéndose o atacando después de morir
 
     CharacterController characterController2D;
+    GameManager gameManager;
 
     [Header("Inputs")]
     [SerializeField] InputActionReference move;
@@ -35,6 +36,7 @@ public class PlayerController : MonoBehaviour
     {
         characterController2D = GetComponent<CharacterController>();
         anim = GetComponent<Animator>();
+        gameManager = FindAnyObjectByType<GameManager>();
 
         move.action.performed += OnMove;
         move.action.canceled += OnMove;
@@ -59,17 +61,29 @@ public class PlayerController : MonoBehaviour
     Vector2 rawMove;
     private void OnMove(InputAction.CallbackContext context)
     {
-        rawMove = context.ReadValue<Vector2>();
-        characterController2D.SetRawMove(rawMove);
+        if (!dead)
+        {
+            rawMove = context.ReadValue<Vector2>();
+            characterController2D.SetRawMove(rawMove);
+        }
+        
     }
     private void OnAttack(InputAction.CallbackContext context)
     {
-        Attack();
+        if (!dead)
+        {
+            Attack();
+        }
+       
     }
 
     private void OnJump(InputAction.CallbackContext context)
     {
-        characterController2D.Jump();
+        if (!dead)
+        {
+            characterController2D.Jump();
+        }
+           
     }  
 
     public void AddScoreCoin()
@@ -82,12 +96,12 @@ public class PlayerController : MonoBehaviour
 
     public void Attack()
     {
-        if (characterController2D.attacking == true) return; //Si el personaje ya esta atacando, no se puede iniciar otro ataque
-
-        characterController2D.canMove = false;
+        if (characterController2D.attacking == true) return; //Si el personaje ya esta atacando, no se puede iniciar otro ataque       
 
         if (characterController2D.IsGrounded() && canAttack)
         {
+            characterController2D.canMove = false;
+
             anim.SetTrigger("Attack"); //Animación de ataque
             characterController2D.attacking = true;
             StartCoroutine(AfterAttack());
@@ -138,16 +152,11 @@ public class PlayerController : MonoBehaviour
 
     public void Dead()
     {
-        dead = true;
+        dead = true;    
 
-        foreach (var script in scriptsToDisableOnDeath) //Desactiva los scripts que se hayan agregado al array scriptsToDisableOnDeath, para evitar que el personaje siga moviéndose o atacando después de morir
-        {
-            script.enabled = false;
-        }
-
-        anim.SetTrigger("Dead"); //Animación de muerte      
-
-        characterController2D.SetRawMove(Vector2.zero); //Detiene el movimiento horizontal del personaje al morir, para que no siga moviéndose después de la animación de muerte
+        anim.SetTrigger("Dead"); //Animación de muerte
+        
+        characterController2D.canMove = false; //Evita que el personaje se mueva después de morir, para que no siga moviéndose después de la animación de muerte     
 
         StartCoroutine(Destroy()); //Inicia la corrutina para destruir el GameObject después de un tiempo, para que la animación de muerte se reproduzca completamente antes de eliminar el personaje de la escena
 
@@ -155,7 +164,12 @@ public class PlayerController : MonoBehaviour
 
     IEnumerator Destroy()
     {
-        yield return new WaitForSeconds(4f);
+        yield return new WaitForSeconds(1.5f);
+
+        gameManager.GameOver(); //Llama a la función GameOver del GameManager para mostrar la pantalla de Game Over después de morir
+
+        yield return new WaitForSeconds(2f);
+
         Destroy(gameObject); //Destruye el GameObject después de un tiempo, para que la animación de muerte se reproduzca completamente antes de eliminar el personaje de la escena
     }
 
@@ -167,7 +181,7 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-    private void OnDisable()
+    public void OnDisable()
     {
         move.action.Disable();
         jump.action.Disable();
