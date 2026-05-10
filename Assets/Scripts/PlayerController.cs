@@ -15,11 +15,13 @@ public class PlayerController : MonoBehaviour
     [SerializeField] public int coins = 0;
     [SerializeField] public int lifes = 3;
     [SerializeField] private Animator anim;
+    [SerializeField] public float inmunityTime = 1f; 
 
 
     private bool dead = false;
     bool canAttack = true;
     private bool dieByZone = false; //Variable para saber si el jugador murió por caer en la DeadZone, esto es para aplicar un efecto de salto al morir en la DeadZone
+    bool inmune = false;
 
 
     [Header("References")]
@@ -131,7 +133,7 @@ public class PlayerController : MonoBehaviour
 
     public void Damage()
     {
-        if (!dead)
+        if (!dead && !inmune)
         {
             lifes--;
             textLifes.text = "X " + lifes;
@@ -146,11 +148,20 @@ public class PlayerController : MonoBehaviour
             else
             {
                 anim.SetTrigger("Hit"); //Animación de recibir daño
-                
+
+                inmune = true;
+
+                StartCoroutine(InmunityTime());
 
                 //Agregar efecto de sonido
             }
         }
+    }
+
+    IEnumerator InmunityTime()
+    {
+        yield return new WaitForSeconds(inmunityTime); //Timepo de Inmunidad
+        inmune = false;
     }
 
     public void Dead()

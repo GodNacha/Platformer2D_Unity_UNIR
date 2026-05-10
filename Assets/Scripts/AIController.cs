@@ -20,19 +20,19 @@ public class AIController : MonoBehaviour
 
     [Header("Detection Range")]
     [SerializeField] float detectionRange = 4f; //Rango de detección del enemigo para detectar al jugador
-    [SerializeField] float chestRange = 8f; 
+    [SerializeField] float chestRange = 8f;
 
     private bool chesing = false; //Variable para saber si el enemigo está persiguiendo al jugador
 
     private bool dead = false;
     bool canAttack = true;
     bool dieByZone = false; //Variable para saber si el enemigo murió por caer en la DeadZone, esto es para aplicar un efecto de salto al morir en la DeadZone
+    bool inmune = false;
 
     private int attackDirection = 1;
 
     Collider2D enemyCollider;
     Collider2D playerCollider;
-
 
 
     private void Awake()
@@ -106,6 +106,7 @@ public class AIController : MonoBehaviour
 
     public void AttackImpulse()
     {
+        inmune = true;
         //Se impulsa hacia la derecha o izquierda dependiendo de la posición del target, para que el enemigo se impulse hacia el jugador al atacar, y no se quede quieto en su posición.
         if (target)
         {         
@@ -146,7 +147,9 @@ public class AIController : MonoBehaviour
     public IEnumerator AfterAttack()
     {
         anim.SetBool("IsRunning", false);
-        yield return new WaitForSeconds(1.5f); //Tiempo de espera después de atacar para recuperar movimiento y ataque.
+        yield return new WaitForSeconds(0.2f); //Tiempo de espera después de atacar para recuperar movimiento y ataque.
+        inmune = false;
+        yield return new WaitForSeconds(1.3f); //Tiempo de espera después de atacar para recuperar movimiento y ataque.
         characterController2D.attacking = false;
         characterController2D.canMove = true;
     }
@@ -163,7 +166,7 @@ public class AIController : MonoBehaviour
 
     public void Damage()
     {
-        if (!dead)
+        if (!dead && !inmune)
         {
             lifes--;
 

@@ -17,6 +17,8 @@ public class CharacterController : MonoBehaviour
     [SerializeField] public float jumpVelocity = 3f;
     [SerializeField] public int lifes = 3;
     [SerializeField] public bool isEnemy = false; //Esto es para diferenciar entre el jugador y los enemigos.
+    [SerializeField] public bool isEnemyFryer = false;
+    [SerializeField] bool delayHitActivate = true; 
 
     [Header("Srite Settings")]
     [SerializeField] public bool facingRightByDefault = true;
@@ -59,7 +61,16 @@ public class CharacterController : MonoBehaviour
     {
         if (canMove && !gameManager.endGame)
         {
-            rb.linearVelocityX = rawMove.x * movementSpeed;
+            if (!isEnemyFryer)
+            {
+                rb.linearVelocityX = rawMove.x * movementSpeed;
+
+            }
+            else
+            {
+                rb.linearVelocity = rawMove * movementSpeed; //Ver si funciona
+            }
+                
         }
         else
         {       
@@ -85,7 +96,12 @@ public class CharacterController : MonoBehaviour
 
         }
 
-        anim.SetBool("IsGrounded", IsGrounded()); //Animación volando en el aire
+        if(!isEnemyFryer)
+        {
+            anim.SetBool("IsGrounded", IsGrounded()); //Animación volando en el aire
+        }
+
+        
 
     }
 
@@ -104,6 +120,7 @@ public class CharacterController : MonoBehaviour
         }
 
     }
+
     #endregion
 
     #region Salto 
@@ -144,12 +161,21 @@ public class CharacterController : MonoBehaviour
         if (spriteRenderer.flipX) //Si el sprite esta volteado, se activa el hit collider de la izquierda, de lo contrario se activa el hit collider de la derecha
         {
             leftHitCollider.enabled = true;
-            Invoke(nameof(DesactivateHits), desactivatehitDelay); //Invoca la función DesactivateHits después de un tiempo, para desactivar los hit colliders después de que se haya completado la animación de ataque
+
+            if (delayHitActivate)
+            {
+                Invoke(nameof(DesactivateHits), desactivatehitDelay); //Invoca la función DesactivateHits después de un tiempo, para desactivar los hit colliders después de que se haya completado la animación de ataque
+            }
+            
         }
         else
         {           
             rightHitCollider.enabled = true;
-            Invoke(nameof(DesactivateHits), desactivatehitDelay);
+
+            if (delayHitActivate)
+            {
+                Invoke(nameof(DesactivateHits), desactivatehitDelay); //Invoca la función DesactivateHits después de un tiempo, para desactivar los hit colliders después de que se haya completado la animación de ataque
+            }
         }
 
         Debug.Log("Golpe dado"); //Aquí es donde se haría el daño al enemigo, o la detección de colisiones con el enemigo para aplicar el daño, dependiendo de la implementación del sistema de combate que se quiera hacer
