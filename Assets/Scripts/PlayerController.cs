@@ -19,13 +19,12 @@ public class PlayerController : MonoBehaviour
 
     private bool dead = false;
     bool canAttack = true;
+    private bool dieByZone = false; //Variable para saber si el jugador murió por caer en la DeadZone, esto es para aplicar un efecto de salto al morir en la DeadZone
 
 
-    [Header("Disable Scripts After Dead")]
-    public MonoBehaviour[] scriptsToDisableOnDeath; //Aquí se pueden agregar los scripts que se quieran desactivar al morir, como el script de movimiento, ataque, etc, para evitar que el personaje siga moviéndose o atacando después de morir
-
-    CharacterController characterController2D;
-    GameManager gameManager;
+    [Header("References")]
+    [SerializeField] CharacterController characterController2D;
+    [SerializeField] GameManager gameManager;
 
     [Header("Inputs")]
     [SerializeField] InputActionReference move;
@@ -47,6 +46,10 @@ public class PlayerController : MonoBehaviour
 
         textCoins.text = "X " + coins;
         textLifes.text = "X " + lifes;
+
+        dead = false;
+        canAttack = true;
+        dieByZone = false;
     }
     
 
@@ -155,29 +158,27 @@ public class PlayerController : MonoBehaviour
         dead = true;    
 
         anim.SetTrigger("Dead"); //Animación de muerte
-        
-        characterController2D.canMove = false; //Evita que el personaje se mueva después de morir, para que no siga moviéndose después de la animación de muerte     
 
-        StartCoroutine(Destroy()); //Inicia la corrutina para destruir el GameObject después de un tiempo, para que la animación de muerte se reproduzca completamente antes de eliminar el personaje de la escena
+        characterController2D.SetRawMove(Vector2.zero);
 
-    }
-
-    IEnumerator Destroy()
-    {
-        yield return new WaitForSeconds(1.5f);
-
+        // characterController2D.canMove = false; //Evita que el personaje se mueva después de morir, para que no siga moviéndose después de la animación de muerte
+                                               
         gameManager.GameOver(); //Llama a la función GameOver del GameManager para mostrar la pantalla de Game Over después de morir
 
-        yield return new WaitForSeconds(2f);
+        if (dieByZone)
+        {
+            characterController2D.rb.linearVelocityY = 3.5f; //Esto hace que el personaje salte un poco al caer en la DeadZone
+        }
 
-        Destroy(gameObject); //Destruye el GameObject después de un tiempo, para que la animación de muerte se reproduzca completamente antes de eliminar el personaje de la escena
-    }
+    }  
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.CompareTag("DeadZone"))
+        if (collision.CompareTag("DeadZone") && !dieByZone)
         {
+            dieByZone = true;
             Dead();
+            
         }
     }
 

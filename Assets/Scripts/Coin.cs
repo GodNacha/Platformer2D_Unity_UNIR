@@ -33,6 +33,11 @@ public class Coin : MonoBehaviour
             player.AddScoreCoin();
             Destroy(gameObject);
         }
+
+        if (collision.CompareTag("DeadZone"))
+        {
+            Destroy(gameObject);
+        }
     }
 
     IEnumerator Invulneravility()

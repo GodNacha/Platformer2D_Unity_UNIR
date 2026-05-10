@@ -16,7 +16,13 @@ public class ScenesManager : MonoBehaviour
     {
       //  StartCoroutine(FadeIn());
 
-        fadeCanvasGroup = fadePanel.GetComponent<CanvasGroup>();
+      if (fadePanel == null)
+      {
+            Debug.LogWarning("Fade Panel is not assigned in the inspector.");
+      }
+      else { fadeCanvasGroup = fadePanel.GetComponent<CanvasGroup>(); }
+
+
     }
 
     public void LoadGame()

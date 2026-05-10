@@ -3,13 +3,15 @@ using UnityEngine;
 
 public class AIController : MonoBehaviour
 {
-    CharacterController characterController2D;
+    [Header("References")]
+    [SerializeField] CharacterController characterController2D;
+    [SerializeField] SplashCoins splashCoins;
+
+    GameManager gameManager;
+
+
+    [Header("Target a Perseguir")]
     [SerializeField] Transform target;
-
-    private bool dead = false;
-    bool canAttack = true;
-
-    private int attackDirection = 1;
 
     [Header("Enemy Stats")]
     public int lifes = 3;
@@ -22,12 +24,25 @@ public class AIController : MonoBehaviour
 
     private bool chesing = false; //Variable para saber si el enemigo está persiguiendo al jugador
 
-    [Header("Disable Scripts After Dead")]
-    public MonoBehaviour[] scriptsToDisableOnDeath; //Aquí se pueden agregar los scripts que se quieran desactivar al morir, como el script de movimiento, ataque, etc, para evitar que el personaje siga moviéndose o atacando después de morir
+    private bool dead = false;
+    bool canAttack = true;
+    bool dieByZone = false; //Variable para saber si el enemigo murió por caer en la DeadZone, esto es para aplicar un efecto de salto al morir en la DeadZone
+
+    private int attackDirection = 1;
+
+    Collider2D enemyCollider;
+    Collider2D playerCollider;
+
+
 
     private void Awake()
     {
         characterController2D = GetComponent<CharacterController>();
+        splashCoins = GetComponentInChildren<SplashCoins>();
+        gameManager = FindAnyObjectByType<GameManager>();
+        enemyCollider = GetComponent<Collider2D>();
+        playerCollider = FindAnyObjectByType<PlayerController>().GetComponent<Collider2D>();
+
         anim = GetComponent<Animator>();
     }
 
@@ -35,7 +50,7 @@ public class AIController : MonoBehaviour
     {
         Vector2 rawMove = Vector2.zero;
 
-        if (target)
+        if (target && !gameManager.endGame)
         {
           float distanceToTarget = Vector2.Distance(transform.position, target.position);
     
@@ -53,7 +68,7 @@ public class AIController : MonoBehaviour
             }
         }
 
-        if (target && chesing)
+        if (target && chesing && !dead && !gameManager.endGame)
         {
            if (transform.position.x > target.position.x)
            {
@@ -173,32 +188,40 @@ public class AIController : MonoBehaviour
 
     public void Dead()
     {
-        dead = true;
-
-        foreach (var script in scriptsToDisableOnDeath) //Desactiva los scripts que se hayan agregado al array scriptsToDisableOnDeath, para evitar que el personaje siga moviéndose o atacando después de morir
-        {
-            script.enabled = false;
-        }
+        dead = true;      
 
         anim.SetTrigger("Dead"); //Animación de muerte      
+        Physics2D.IgnoreCollision(enemyCollider, playerCollider, true); //Esto hace que el se ignoren las colisiones entre el enemigo y el jugador tras morir.
 
         characterController2D.SetRawMove(Vector2.zero); //Detiene el movimiento horizontal del personaje al morir, para que no siga moviéndose después de la animación de muerte
 
         StartCoroutine(Destroy()); //Inicia la corrutina para destruir el GameObject después de un tiempo, para que la animación de muerte se reproduzca completamente antes de eliminar el personaje de la escena
 
+
+        if (dieByZone)
+        {
+            characterController2D.rb.linearVelocityY = 3.5f; //Esto hace que el personaje salte un poco al caer en la DeadZone
+        }
+        else
+        {
+            splashCoins.Splash(); //Llama a la función Splash de SplashCoins para que el enemigo suelte monedas al morir.
+        }
+
     }
 
     IEnumerator Destroy()
     {
-        yield return new WaitForSeconds(4f);
+        yield return new WaitForSeconds(3.5f);
         Destroy(gameObject); //Destruye el GameObject después de un tiempo, para que la animación de muerte se reproduzca completamente antes de eliminar el personaje de la escena
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.CompareTag("DeadZone"))
+        if (collision.CompareTag("DeadZone") && !dieByZone)
         {
+            dieByZone = true;
             Dead();
+            
         }
     }
 

@@ -29,9 +29,6 @@ public class CharacterController : MonoBehaviour
     [SerializeField] public Collider2D rightHitCollider;
     [SerializeField] public Collider2D leftHitCollider;
 
-    [Header("Script Disables")]
-    [SerializeField] MonoBehaviour[] scriptsToDisableOnDeath; //Aquí se pueden agregar los scripts que se quieran desactivar al morir, como el script de movimiento, ataque, etc, para evitar que el personaje siga moviéndose o atacando después de morir
-
     public bool canMove = true;
     public bool attacking = false;
     bool canJump = true;
@@ -48,17 +45,14 @@ public class CharacterController : MonoBehaviour
         spriteRenderer = GetComponent<SpriteRenderer>();     
         gameManager = FindAnyObjectByType<GameManager>();
 
-
     }
 
     private void Start()
     {
         rightHitCollider.enabled = false;
         leftHitCollider.enabled = false;
-
-        
+       
     }
-
 
     const float Threshold = 0.1f;
     void Update()
@@ -69,13 +63,12 @@ public class CharacterController : MonoBehaviour
         }
         else
         {       
-            if (!isEnemy || gameManager.endGame)
+            if (!isEnemy && !canMove)
             {
                 rb.linearVelocityX = 0; //El jugador se queda quieto al atacar.
             }
             
         }
-
 
         bool isMoving = Mathf.Abs(rawMove.x) > Threshold;
 
