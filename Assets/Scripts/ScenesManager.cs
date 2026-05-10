@@ -1,56 +1,77 @@
+using System.Collections;
+using Unity.VectorGraphics;
 using UnityEngine;
 using UnityEngine.SceneManagement;
-using System.Collections;
 
 public class ScenesManager : MonoBehaviour
 {
-    public string mainMenuSceneName = "MainMenu";
-    public string gameSceneName = "GameScene";
-
+    [Header ("Fade Settings")]
     public GameObject fadePanel;
+    public float delayFadeOut = 2f;
+    public float fadeDuration = 2f;
 
     private CanvasGroup fadeCanvasGroup;
 
 
     void Start()
-    {
-      //  StartCoroutine(FadeIn());
+    {       
+        if (fadePanel == null)
+        {
+            fadeCanvasGroup = GameObject.Find("FadePanel").GetComponent<CanvasGroup>();
+        }
+        else
+        {
+            fadeCanvasGroup = fadePanel.GetComponent<CanvasGroup>();
+        }
 
-      if (fadePanel == null)
-      {
-            Debug.LogWarning("Fade Panel is not assigned in the inspector.");
-      }
-      else { fadeCanvasGroup = fadePanel.GetComponent<CanvasGroup>(); }
+        fadeCanvasGroup.alpha = 0f; //Setear la opacidad/Alpha en 0 cada vez que se inicia el juego para evitar problemas
 
+        fadeCanvasGroup.blocksRaycasts = true; //Bloquea los botones al comenzar
+
+        StartCoroutine(FadeIn());
 
     }
 
-    public void LoadGame()
+    public void LoadScene(string sceneName)
     {
-        SceneManager.LoadScene(gameSceneName);
-    }
-
-    public void LoadMenu()
-    {
-        SceneManager.LoadScene(mainMenuSceneName);
+        StartCoroutine(FadeOut(sceneName));
     }
 
     public void QuitGame()
     {
         Application.Quit();
     }
-
-    /*
+   
     public IEnumerator FadeIn()
     {
-        // Implement fade-in effect here
+        float elapsedTime = 0f;
+        while (elapsedTime < fadeDuration)
+        {
+            fadeCanvasGroup.alpha = Mathf.Lerp(1f, 0f, elapsedTime / fadeDuration);
+            elapsedTime += Time.deltaTime; 
+            yield return null;
+        }
+        fadeCanvasGroup.alpha = 0f; 
+        fadeCanvasGroup.blocksRaycasts = false; 
 
     }
 
-    public IEnumerator FadeOut()
+    public IEnumerator FadeOut(string sceneName)
     {
-        // Implement fade-out effect here
+        fadeCanvasGroup.blocksRaycasts = true; 
+
+        yield return new WaitForSeconds(delayFadeOut); //Espera un tiempo antes de iniciar el fade out, para que el jugador pueda ver la animación.
+
+        float elapsedTime = 0f;
+        while (elapsedTime < fadeDuration)
+        {
+            fadeCanvasGroup.alpha = Mathf.Lerp(0f, 1f, elapsedTime / fadeDuration);
+            elapsedTime += Time.unscaledDeltaTime; //UnsacledDeltaTime para que el fade out no se detenga con el timepo del juego pausado.
+            yield return null;
+        }
+        fadeCanvasGroup.alpha = 1f; 
+        SceneManager.LoadScene(sceneName);
 
     }
-    */
+    
 }
