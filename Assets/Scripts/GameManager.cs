@@ -1,5 +1,6 @@
-using UnityEngine;
 using TMPro;
+using UnityEngine;
+using static UnityEditor.PlayerSettings.SplashScreen;
 
 public class GameManager : MonoBehaviour
 {
@@ -36,6 +37,7 @@ public class GameManager : MonoBehaviour
     public void Win()
     {
         player.OnDisable(); 
+        player.NoMovement(); // Evita que el jugador se mueva después de ganar, para que no siga moviéndose después de la animación de victoria
 
         textScore2.text = "X " + player.coins;
 

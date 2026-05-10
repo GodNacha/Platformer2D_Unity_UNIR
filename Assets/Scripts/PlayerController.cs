@@ -158,16 +158,19 @@ public class PlayerController : MonoBehaviour
         dead = true;    
 
         anim.SetTrigger("Dead"); //Animación de muerte
-
-        characterController2D.SetRawMove(Vector2.zero);
-
-        // characterController2D.canMove = false; //Evita que el personaje se mueva después de morir, para que no siga moviéndose después de la animación de muerte
-                                               
+                                 //
         gameManager.GameOver(); //Llama a la función GameOver del GameManager para mostrar la pantalla de Game Over después de morir
 
         if (dieByZone)
         {
+            characterController2D.rb.linearVelocityX = 0f; //Esto hace que el personaje salte un poco al caer en la DeadZone
+
             characterController2D.rb.linearVelocityY = 3.5f; //Esto hace que el personaje salte un poco al caer en la DeadZone
+        }
+        else
+        {
+            characterController2D.canMove = false; //Evita que el personaje se mueva después de morir, para que no siga moviéndose después de la animación de muerte
+
         }
 
     }  
@@ -180,6 +183,11 @@ public class PlayerController : MonoBehaviour
             Dead();
             
         }
+    }
+
+    public void NoMovement()
+    {
+        characterController2D.canMove = false;
     }
 
     public void OnDisable()

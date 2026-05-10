@@ -35,6 +35,11 @@ public class ScenesManager : MonoBehaviour
         SceneManager.LoadScene(mainMenuSceneName);
     }
 
+    public void QuitGame()
+    {
+        Application.Quit();
+    }
+
     /*
     public IEnumerator FadeIn()
     {
