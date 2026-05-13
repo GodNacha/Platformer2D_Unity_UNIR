@@ -17,6 +17,7 @@ public class AIController : MonoBehaviour
     public int lifes = 3;
     public Animator anim;
     public float impulseForce = 2.8f; //Fuerza del impulso al atacar
+    public float delayAttack = 0.3f;
 
     [Header("Detection Range")]
     [SerializeField] float detectionRange = 4f; //Rango de detección del enemigo para detectar al jugador
@@ -25,7 +26,6 @@ public class AIController : MonoBehaviour
     private bool chesing = false; //Variable para saber si el enemigo está persiguiendo al jugador
 
     private bool dead = false;
-    bool canAttack = true;
     bool dieByZone = false; //Variable para saber si el enemigo murió por caer en la DeadZone, esto es para aplicar un efecto de salto al morir en la DeadZone
     bool inmune = false;
 
@@ -79,10 +79,10 @@ public class AIController : MonoBehaviour
                 rawMove = Vector2.right;
            }
 
-           if (Mathf.Abs(transform.position.x - target.position.x) < 0.5f) //Para que se quede quieto al llegar al target, y no se quede vibrando por estar cambiando constantemente de dirección
+           if (Mathf.Abs(transform.position.x - target.position.x) < 0.4f) //Para que se quede quieto al llegar al target, y no se quede vibrando por estar cambiando constantemente de dirección
            {
                 rawMove = Vector2.zero; //Se queda quieto
-                Attack(); //Llama a la función Attack para que el enemigo ataque al jugador cuando esté lo suficientemente cerca, esto se puede ajustar dependiendo de la distancia que se quiera para que el enemigo ataque al jugador
+                StartCoroutine(Attack()); //Llama a la función Attack para que el enemigo ataque al jugador cuando esté lo suficientemente cerca, esto se puede ajustar dependiendo de la distancia que se quiera para que el enemigo ataque al jugador
            }
 
            
@@ -105,10 +105,9 @@ public class AIController : MonoBehaviour
     }
 
     public void AttackImpulse()
-    {
-        inmune = true;
+    {       
         //Se impulsa hacia la derecha o izquierda dependiendo de la posición del target, para que el enemigo se impulse hacia el jugador al atacar, y no se quede quieto en su posición.
-        if (target)
+        if (target && inmune)
         {         
             characterController2D.rb.linearVelocityX = impulseForce * attackDirection; // Impulso hacia la derecha o izquierda dependiendo de la posición del target.
 
@@ -118,14 +117,17 @@ public class AIController : MonoBehaviour
 
     }
 
-    public void Attack()
+    public IEnumerator Attack()
     {
-        if (characterController2D.attacking == true) return; //Si el personaje ya esta atacando, no se puede iniciar otro ataque
+        if (characterController2D.attacking == true)
+        {
+            yield break; //Salir de la corrutina si ya está atacando
+        }
 
         characterController2D.canMove = false;
         characterController2D.attacking = true;
 
-        if (characterController2D.IsGrounded() && canAttack)
+        if (characterController2D.IsGrounded())
         {
             // Guardar la dirección del ataque dependiendo de la posición del target/jugador
             if (transform.position.x > target.position.x)
@@ -139,9 +141,13 @@ public class AIController : MonoBehaviour
 
             anim.SetTrigger("Attack"); //Animación de ataque
 
-            StartCoroutine(AfterAttack());
-        }
+            yield return new WaitForSeconds(delayAttack); //Tiempo de espera para aplicar el impulso.
 
+            inmune = true;
+
+            AttackImpulse(); //Aplica el impulso al atacar        
+
+        }
     }
 
     public IEnumerator AfterAttack()
@@ -156,10 +162,15 @@ public class AIController : MonoBehaviour
 
     public void CancelAttack()
     {
-       // if (!characterController2D.attacking) return;
+       if (!inmune)
+       {
+            characterController2D.canMove = false;
+            characterController2D.attacking = true;
 
-        //Completar
-
+            StopCoroutine(Attack());
+            StartCoroutine(AfterAttack());
+            Debug.Log("Ataque cancelado");
+       }
         
     }
 
@@ -170,7 +181,12 @@ public class AIController : MonoBehaviour
         {
             lifes--;
 
-           // CancelAttack();
+            if (characterController2D.attacking && !inmune)
+            {
+                CancelAttack();
+            }
+
+            inmune = true;
 
             if (lifes <= 0)
             {
@@ -182,8 +198,7 @@ public class AIController : MonoBehaviour
             else
             {
                 anim.SetTrigger("Hit"); //Animación de recibir daño
-
-
+                StartCoroutine(AfterAttack());
                 //Agregar efecto de sonido
             }
         }
@@ -210,7 +225,7 @@ public class AIController : MonoBehaviour
             splashCoins.Splash(); //Llama a la función Splash de SplashCoins para que el enemigo suelte monedas al morir.
         }
 
-    }
+    }   
 
     IEnumerator Destroy()
     {

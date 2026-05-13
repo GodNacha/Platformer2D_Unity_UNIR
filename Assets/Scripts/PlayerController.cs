@@ -15,11 +15,9 @@ public class PlayerController : MonoBehaviour
     [SerializeField] public int coins = 0;
     [SerializeField] public int lifes = 3;
     [SerializeField] private Animator anim;
-    [SerializeField] public float inmunityTime = 1f; 
 
 
     private bool dead = false;
-    bool canAttack = true;
     private bool dieByZone = false; //Variable para saber si el jugador murió por caer en la DeadZone, esto es para aplicar un efecto de salto al morir en la DeadZone
     bool inmune = false;
 
@@ -50,7 +48,6 @@ public class PlayerController : MonoBehaviour
         textLifes.text = "X " + lifes;
 
         dead = false;
-        canAttack = true;
         dieByZone = false;
     }
     
@@ -77,7 +74,7 @@ public class PlayerController : MonoBehaviour
     {
         if (!dead)
         {
-            Attack();
+            StartCoroutine(Attack());
         }
        
     }
@@ -99,34 +96,39 @@ public class PlayerController : MonoBehaviour
         textCoins.text = "X " + coins;
     }
 
-    public void Attack()
+    public IEnumerator Attack()
     {
-        if (characterController2D.attacking == true) return; //Si el personaje ya esta atacando, no se puede iniciar otro ataque       
-
-        if (characterController2D.IsGrounded() && canAttack)
+        if (characterController2D.attacking == true)
         {
-            characterController2D.canMove = false;
+            yield break;
+        }//Si el personaje ya esta atacando, no se puede iniciar otro ataque       
 
-            anim.SetTrigger("Attack"); //Animación de ataque
-            characterController2D.attacking = true;
-            StartCoroutine(AfterAttack());
+        characterController2D.attacking = true;
+        characterController2D.canMove = false;
 
+        if (characterController2D.IsGrounded())
+        {           
+            anim.SetTrigger("Attack"); //Animación de ataque        
         }
         else
         {
             anim.SetTrigger("Attack"); //Animación de ataque en el aire
-            characterController2D.attacking = true;
-            StartCoroutine(AfterAttack());
-
+            
         }
+     
+        yield return new WaitForSeconds(0.15f);        
+
+        StartCoroutine(AfterAttack()); 
 
     }
 
     public IEnumerator AfterAttack()
     {
-        yield return new WaitForSeconds(0.5f); //Tiempo de espera después de atacar, para que el enemigo no pueda atacar constantemente sin esperar un tiempo entre ataques, esto se puede ajustar dependiendo de la velocidad de ataque que se quiera para el enemigo
+      
+        yield return new WaitForSeconds(0.25f); //Tiempo de espera después de atacar, para que el enemigo no pueda atacar constantemente sin esperar un tiempo entre ataques, esto se puede ajustar dependiendo de la velocidad de ataque que se quiera para el enemigo
         characterController2D.attacking = false;
         characterController2D.canMove = true;
+        inmune = false;
 
         characterController2D.SetRawMove(rawMove);
     }
@@ -138,6 +140,13 @@ public class PlayerController : MonoBehaviour
             lifes--;
             textLifes.text = "X " + lifes;
 
+            if (characterController2D.attacking && !inmune)
+            {
+                CancelAttack();
+            }
+
+            inmune = true;
+
             if (lifes <= 0)
             {
                 Dead();
@@ -148,21 +157,20 @@ public class PlayerController : MonoBehaviour
             else
             {
                 anim.SetTrigger("Hit"); //Animación de recibir daño
-
-                inmune = true;
-
-                StartCoroutine(InmunityTime());
+                StartCoroutine(AfterAttack()); 
 
                 //Agregar efecto de sonido
             }
         }
     }
 
-    IEnumerator InmunityTime()
-    {
-        yield return new WaitForSeconds(inmunityTime); //Timepo de Inmunidad
-        inmune = false;
+    public void CancelAttack() //Se supone que, como se sobreescribe la animación de attack por la hit, la aniamción no se alcanzará a ejecutar por completo, por ende, lo boz colliders no les pasará nada.
+    {      
+        characterController2D.attacking = true;
+        StopCoroutine(Attack());
+        StartCoroutine(AfterAttack());
     }
+  
 
     public void Dead()
     {

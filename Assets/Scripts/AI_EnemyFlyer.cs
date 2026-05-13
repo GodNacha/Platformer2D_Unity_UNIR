@@ -29,6 +29,10 @@ public class AI_EnemyFlyer : MonoBehaviour
     bool impulseActivate = false;
     bool inmune = false;
 
+    private float targetAttackY;
+    public Transform jugadorReal;
+
+
     Collider2D enemyCollider;
     Collider2D playerCollider;
 
@@ -92,9 +96,9 @@ public class AI_EnemyFlyer : MonoBehaviour
         RaycastHit2D hit = Physics2D.Raycast(transform.position, Vector2.down, groundCheckDistance, groundLayerMask); //Esto es para detectar si el enemigo tocó el suelo.        
 
         bool grounded = hit.collider != null;
-
+      
         // Si toca el suelo mientras ataca
-        if (grounded && characterController2D.attacking && impulseActivate)
+        if (grounded && characterController2D.attacking && impulseActivate && transform.position.y <= targetAttackY + 0.2f)
         {
             StopAttackImpulse();
         }
@@ -107,14 +111,18 @@ public class AI_EnemyFlyer : MonoBehaviour
         if (characterController2D.attacking == true) //Si el personaje ya esta atacando, no se puede iniciar otro ataque
         {
             yield break; //Salir de la corrutina si ya está atacando
-        }
+        }      
 
         characterController2D.canMove = false;
         characterController2D.attacking = true;
 
+        characterController2D.SetRawMove(Vector2.zero); //Detiene el movimiento horizontal del enemigo al iniciar el ataque, para que no siga moviéndose mientras ataca
+
         anim.SetTrigger("Pre-Attack"); //Animación de pre-Ataque
       
-        yield return new WaitForSeconds(0.5f); //Esperar a que termine la animación.
+        yield return new WaitForSeconds(0.45f); //Esperar a que termine la animación.
+
+        inmune = true;
 
         AttackImpulseDown();
 
@@ -123,10 +131,11 @@ public class AI_EnemyFlyer : MonoBehaviour
     public void AttackImpulseDown() //Llamar en un UnityEvent? O en una corrutina?
     {
         //El enemigo se impulsa hacia abajo de forma constante hasta tocar el suelo con la layer Ground.
-        inmune = true;
 
-        if (target)
+        if (target && inmune)
         {
+            targetAttackY = jugadorReal.position.y;
+
             impulseActivate = true;
 
             anim.SetTrigger("Attack"); //Animación de pre-Ataque
@@ -162,8 +171,13 @@ public class AI_EnemyFlyer : MonoBehaviour
 
     public void CancelAttack()
     {
+        characterController2D.attacking = true;
+        characterController2D.canMove = false;
+
         StopCoroutine(AttackCoroutine());
         StartCoroutine(AfterAttack());
+
+        Debug.Log("Ataque cancelado");
     }
 
 
@@ -173,10 +187,16 @@ public class AI_EnemyFlyer : MonoBehaviour
         {
             lifes--;
 
-            // CancelAttack();
+            if (characterController2D.attacking && !inmune)
+            {
+                CancelAttack();
+            }
+
+            inmune = true;
 
             if (lifes <= 0)
             {
+                
                 Dead();
 
                 //Agregar efecto de sonido
@@ -184,9 +204,9 @@ public class AI_EnemyFlyer : MonoBehaviour
             }
             else
             {
+
                 anim.SetTrigger("Hit"); //Animación de recibir daño
-
-
+                StartCoroutine(AfterAttack());
                 //Agregar efecto de sonido
             }
         }
@@ -207,6 +227,7 @@ public class AI_EnemyFlyer : MonoBehaviour
         
 
     }
+
 
     IEnumerator Destroy()
     {
@@ -241,5 +262,7 @@ public class AI_EnemyFlyer : MonoBehaviour
         Gizmos.DrawWireSphere(transform.position, chestRange);
 
     }
+
+
 
 }

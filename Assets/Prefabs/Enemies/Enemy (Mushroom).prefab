@@ -491,6 +491,8 @@ MonoBehaviour:
   jumpVelocity: 3
   lifes: 3
   isEnemy: 1
+  isEnemyFryer: 0
+  delayHitActivate: 1
   facingRightByDefault: 0
   groundCheckDistance: 0.2
   groundLayerMask:
@@ -545,6 +547,7 @@ MonoBehaviour:
   lifes: 3
   anim: {fileID: 0}
   impulseForce: 2.5
+  delayAttack: 0.4
   detectionRange: 1.28
   chestRange: 2.15
 --- !u!50 &8395094396455152459
