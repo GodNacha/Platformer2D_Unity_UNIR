@@ -12,9 +12,8 @@ public class ScenesManager : MonoBehaviour
 
     private CanvasGroup fadeCanvasGroup;
 
-
-    void Start()
-    {       
+    private void Awake()
+    {
         if (fadePanel == null)
         {
             fadeCanvasGroup = GameObject.Find("FadePanel").GetComponent<CanvasGroup>();
@@ -24,11 +23,25 @@ public class ScenesManager : MonoBehaviour
             fadeCanvasGroup = fadePanel.GetComponent<CanvasGroup>();
         }
 
+        if (SceneManager.GetActiveScene().name == "Menu")
+        {
+            Cursor.visible = true; //Hace visible el cursor en el menú principal
+        }
+        else
+        {
+            Cursor.visible = false; //Hace invisible el cursor en el resto de escenas
+        }
+    }
+
+    void Start()
+    {              
+
         fadeCanvasGroup.alpha = 0f; //Setear la opacidad/Alpha en 0 cada vez que se inicia el juego para evitar problemas
 
         fadeCanvasGroup.blocksRaycasts = true; //Bloquea los botones al comenzar
 
         StartCoroutine(FadeIn());
+
 
     }
 

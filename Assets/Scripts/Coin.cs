@@ -6,7 +6,7 @@ public class Coin : MonoBehaviour
     PlayerController player;
 
     [Header("Coin Settings")]
-    public bool isSpecialCoin = false; //Esto es para diferenciar entre las monedas normales y las monedas especiales.
+    public bool isSpecialCoin = false; //Esto es para diferenciar entre las monedas normales y las monedas que aparecen en los cofres/cajas.
 
     [Header("Special Coin")]
     [Tooltip("Duración de la invulnerabilidad de las monedas que Spawnean en un cofre/objeto. Asi se evita que el jugador las agarre apenas salen, permitiendo que se vea la animación")]

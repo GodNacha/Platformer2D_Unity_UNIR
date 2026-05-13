@@ -80,7 +80,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_GlobalIlluminationMeshLod: 0
   m_SortingLayerID: -1431564479
-  m_SortingLayer: 6
+  m_SortingLayer: 7
   m_SortingOrder: 0
   m_MaskInteraction: 0
   m_Sprite: {fileID: 7482667652216324306, guid: 311925a002f4447b3a28927169b83ea6, type: 3}
@@ -167,6 +167,7 @@ GameObject:
   - component: {fileID: 964286943936404209}
   - component: {fileID: 4348565943705522215}
   - component: {fileID: 2819594603895113629}
+  - component: {fileID: 4777851888643636258}
   m_Layer: 8
   m_Name: Enemy (Flyer)
   m_TagString: Untagged
@@ -236,8 +237,8 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_GlobalIlluminationMeshLod: 0
-  m_SortingLayerID: 732722611
-  m_SortingLayer: 7
+  m_SortingLayerID: -414572947
+  m_SortingLayer: 9
   m_SortingOrder: 0
   m_MaskInteraction: 0
   m_Sprite: {fileID: -4331948892352828423, guid: e3b5751827823f04b90c6139deadd1f3, type: 3}
@@ -342,6 +343,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::AI_EnemyFlyer
   characterController2D: {fileID: 8003443829377880144}
   splashCoins: {fileID: 4717428718792130011}
+  waypointPatrol: {fileID: 0}
   target: {fileID: 0}
   lifes: 3
   anim: {fileID: 8842710007515771348}
@@ -417,6 +419,25 @@ CapsuleCollider2D:
   m_Offset: {x: 0, y: 0.26442537}
   m_Size: {x: 0.39643636, y: 0.52284735}
   m_Direction: 0
+--- !u!114 &4777851888643636258
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3090698587422083541}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: acfe1644b8f7bde4e8939ad7a268e735, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::WaypointPatrol
+  waypoints:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  reachDistance: 0.2
+  minWaitTime: 1
+  maxWaitTime: 2.5
 --- !u!1 &7564917960971052814
 GameObject:
   m_ObjectHideFlags: 0

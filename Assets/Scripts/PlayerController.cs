@@ -194,7 +194,14 @@ public class PlayerController : MonoBehaviour
             }
         }
     }
-  
+
+    public void AddLife()
+    {
+        lifes++;
+        textLifes.text = "X " + lifes;
+        //Agregar efecto de sonido
+    }
+
 
     public void Dead()
     {

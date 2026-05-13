@@ -6,6 +6,7 @@ public class AI_EnemyFlyer : MonoBehaviour
     [Header("References")]
     [SerializeField] CharacterController characterController2D;
     [SerializeField] SplashCoins splashCoins;
+    [SerializeField] WaypointPatrol waypointPatrol;
 
     GameManager gameManager;
 
@@ -46,6 +47,7 @@ public class AI_EnemyFlyer : MonoBehaviour
         enemyCollider = GetComponent<Collider2D>();
         playerCollider = FindAnyObjectByType<PlayerController>().GetComponent<Collider2D>();
 
+        waypointPatrol = GetComponent<WaypointPatrol>();
         anim = GetComponent<Animator>();
     }
 
@@ -71,8 +73,43 @@ public class AI_EnemyFlyer : MonoBehaviour
             }
         }
 
+
+        //Patrullaje
+        if (!chesing && !dead && !gameManager.endGame)
+        {
+            waypointPatrol.UpdatePatrol();
+
+            // Si está esperando, no se mueve
+            if (waypointPatrol.IsWaiting)
+            {
+                rawMove = Vector2.zero;
+            }
+            else
+            {
+                
+                Transform patrolTarget = waypointPatrol.CurrentTarget;
+
+                if (patrolTarget != null)
+                {
+                    Vector2 direction = (patrolTarget.position - transform.position).normalized;
+
+                    rawMove = direction;
+
+                     // Al llegar se detiene
+                    if (Vector2.Distance(transform.position, patrolTarget.position) < 0.2f)
+                    {
+                        rawMove = Vector2.zero;
+                    }
+                }
+                
+            }
+        }
+
+
+        //Persecusión
         if (target && chesing && !dead && !gameManager.endGame && !impulseActivate)
         {
+            waypointPatrol.StopWaiting();
    
             Vector2 direction = (target.position - transform.position).normalized; //Calcula la dirección normalizada (X-Y)
             rawMove = direction;
@@ -176,7 +213,7 @@ public class AI_EnemyFlyer : MonoBehaviour
         yield return new WaitForSeconds(0.3f);
         inmune = false;
         canceledAttack = false;
-        yield return new WaitForSeconds(1f); //Tiempo de espera después de atacar para recuperar movimiento y ataque.
+        yield return new WaitForSeconds(1.3f); //Tiempo de espera después de atacar para recuperar movimiento y ataque.
         anim.SetBool("IsRunning", false);
         characterController2D.attacking = false;
         characterController2D.canMove = true;
@@ -263,8 +300,7 @@ public class AI_EnemyFlyer : MonoBehaviour
     {
         if (collision.CompareTag("DeadZone"))
         {
-            StartCoroutine(AfterAttack());
-
+            StopAttackImpulse();
         }
     }
 

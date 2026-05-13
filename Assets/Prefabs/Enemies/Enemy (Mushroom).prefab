@@ -368,6 +368,7 @@ GameObject:
   - component: {fileID: 798577251563047184}
   - component: {fileID: 8395094396455152459}
   - component: {fileID: 9208786173266919387}
+  - component: {fileID: 1935653268409587722}
   m_Layer: 8
   m_Name: Enemy (Mushroom)
   m_TagString: Untagged
@@ -544,6 +545,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::AIController
   characterController2D: {fileID: 2123098918667815260}
   splashCoins: {fileID: 0}
+  waypointPatrol: {fileID: 0}
   target: {fileID: 0}
   lifes: 3
   anim: {fileID: 0}
@@ -615,3 +617,19 @@ CapsuleCollider2D:
   m_Offset: {x: 0, y: 0.17862573}
   m_Size: {x: 0.32213044, y: 0.3512481}
   m_Direction: 0
+--- !u!114 &1935653268409587722
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2414152315520068811}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: acfe1644b8f7bde4e8939ad7a268e735, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::WaypointPatrol
+  waypoints: []
+  reachDistance: 0.2
+  minWaitTime: 1
+  maxWaitTime: 2.5

@@ -63,8 +63,11 @@ TagManager:
   - name: Gameplay
     uniqueID: 2863402817
     locked: 0
-  - name: Foreground
+  - name: Foreground 1
     uniqueID: 732722611
+    locked: 0
+  - name: Foreground 2
+    uniqueID: 3880394349
     locked: 0
   m_RenderingLayers:
   - Default

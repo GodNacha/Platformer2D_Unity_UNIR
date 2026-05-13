@@ -12,7 +12,8 @@ public class SplashCoins : MonoBehaviour
     [Header("Force")]
     [SerializeField] private float minUpForce = 1.5f;
     [SerializeField] private float maxUpForce = 3f;
-    [SerializeField] private float horizontalForce = 4f;   
+    [SerializeField] private float horizontalForce = 4f;
+   
 
     public void Splash()
     {

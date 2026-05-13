@@ -6,6 +6,7 @@ public class AIController : MonoBehaviour
     [Header("References")]
     [SerializeField] CharacterController characterController2D;
     [SerializeField] SplashCoins splashCoins;
+    [SerializeField] WaypointPatrol waypointPatrol;
 
     GameManager gameManager;
 
@@ -47,6 +48,7 @@ public class AIController : MonoBehaviour
         playerCollider = FindAnyObjectByType<PlayerController>().GetComponent<Collider2D>();
 
         anim = GetComponent<Animator>();
+        waypointPatrol = GetComponent<WaypointPatrol>();
     }
 
     private void Update()
@@ -71,8 +73,42 @@ public class AIController : MonoBehaviour
             }
         }
 
+        //Patrullando los waypoints
+
+        if (!chesing && !dead && !gameManager.endGame)
+        {
+            waypointPatrol.UpdatePatrol();
+
+            // Si está esperando, no se mueve
+            if (waypointPatrol.IsWaiting)
+            {
+                rawMove = Vector2.zero;
+            }
+            else
+            {
+                Transform patrolTarget = waypointPatrol.CurrentTarget; //Nuevo target para patrullar
+
+                if (patrolTarget != null)
+                {
+                    if (transform.position.x > patrolTarget.position.x)
+                    {
+                        rawMove = Vector2.left;
+                    }
+                    else
+                    {
+                        rawMove = Vector2.right;
+                    }
+                }
+            }
+        }
+
+
+        //Persiguiendo al jugador
+
         if (target && chesing && !dead && !gameManager.endGame)
         {
+            waypointPatrol.StopWaiting(); //Se corta la espera del waypoint para empezar a seguir al jugador.
+
            if (transform.position.x > target.position.x)
            {
                 rawMove = Vector2.left;
@@ -95,6 +131,7 @@ public class AIController : MonoBehaviour
 
            
         }
+
 
         characterController2D.SetRawMove(rawMove);
     }
