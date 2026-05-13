@@ -86,7 +86,7 @@ public class AIController : MonoBehaviour
            {
                 rawMove = Vector2.zero; //Se queda quieto
 
-                if (!characterController2D.attacking)
+                if (!characterController2D.attacking && !dead)
                 {
                     attackCorutine = StartCoroutine(Attack()); //Llama a la función Attack para que el enemigo ataque al jugador cuando esté lo suficientemente cerca.
 
@@ -150,7 +150,7 @@ public class AIController : MonoBehaviour
 
             yield return new WaitForSeconds(delayAttack); //Tiempo de espera para aplicar el impulso.
 
-            if (canceledAttack) //Se rompe la corrutina si el ataque se cancela
+            if (canceledAttack || dead) //Se rompe la corrutina si el ataque se cancela
             {
                 yield break;
             }

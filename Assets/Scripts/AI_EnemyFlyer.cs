@@ -81,7 +81,7 @@ public class AI_EnemyFlyer : MonoBehaviour
             {
                 rawMove = Vector2.zero; //Se queda quieto
 
-                if (!characterController2D.attacking)
+                if (!characterController2D.attacking && !dead)
                 {
                     attackCoroutine = StartCoroutine(AttackCoroutine()); //Llama a la Corrutina Attack para que el enemigo ataque al jugador cuando esté lo suficientemente cerca
                     characterController2D.rb.linearVelocityY = 0; //Ver si funciona.
@@ -106,7 +106,7 @@ public class AI_EnemyFlyer : MonoBehaviour
         bool grounded = hit.collider != null;
       
         // Si toca el suelo mientras ataca
-        if (grounded && characterController2D.attacking && impulseActivate && transform.position.y <= targetAttackY + 0.2f)
+        if (grounded && characterController2D.attacking && impulseActivate && transform.position.y <= targetAttackY + 0.5f)
         {
             StopAttackImpulse();
         }
@@ -127,7 +127,7 @@ public class AI_EnemyFlyer : MonoBehaviour
       
         yield return new WaitForSeconds(0.45f); //Esperar a que termine la animación.
 
-        if (canceledAttack)
+        if (canceledAttack || dead)
         {
             yield break;
         }

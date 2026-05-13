@@ -102,17 +102,18 @@ public class PlayerController : MonoBehaviour
     {
         canceledAttack = false;
 
-        if (characterController2D.attacking == true)
+        if (characterController2D.attacking == true || dead)
         {
             yield break;
         }//Si el personaje ya esta atacando, no se puede iniciar otro ataque       
 
         characterController2D.attacking = true;
-        characterController2D.canMove = false;
 
         if (characterController2D.IsGrounded())
         {           
-            anim.SetTrigger("Attack"); //Animación de ataque        
+            anim.SetTrigger("Attack"); //Animación de ataque
+            characterController2D.canMove = false;
+
         }
         else
         {
@@ -122,7 +123,7 @@ public class PlayerController : MonoBehaviour
      
         yield return new WaitForSeconds(0.15f); 
         
-        if (canceledAttack)
+        if (canceledAttack || dead)
         {
             yield break;
         }
@@ -135,7 +136,7 @@ public class PlayerController : MonoBehaviour
 
     public IEnumerator AfterAttack()
     {      
-        yield return new WaitForSeconds(0.25f); //Tiempo de espera después de atacar, para que el enemigo no pueda atacar constantemente sin esperar un tiempo entre ataques, esto se puede ajustar dependiendo de la velocidad de ataque que se quiera para el enemigo
+        yield return new WaitForSeconds(0.23f); //Tiempo de espera después de atacar, para que el enemigo no pueda atacar constantemente sin esperar un tiempo entre ataques, esto se puede ajustar dependiendo de la velocidad de ataque que se quiera para el enemigo
         characterController2D.attacking = false;
         characterController2D.canMove = true;
         inmune = false;

@@ -57,6 +57,9 @@ TagManager:
   - name: Fondo 5
     uniqueID: 2318805435
     locked: 0
+  - name: Fondo 6
+    uniqueID: 3824237805
+    locked: 0
   - name: Gameplay
     uniqueID: 2863402817
     locked: 0
