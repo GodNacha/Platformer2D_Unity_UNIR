@@ -17074,6 +17074,7 @@ MonoBehaviour:
     m_Bits: 8
   rightHitCollider: {fileID: 3202869637838588621}
   leftHitCollider: {fileID: 3202869637838588621}
+  desactivatehitDelay: 0.25
   canMove: 1
   attacking: 0
 --- !u!114 &2473347507097173527
@@ -17195,7 +17196,7 @@ BoxCollider2D:
     m_Bits: 0
   m_ExcludeLayers:
     serializedVersion: 2
-    m_Bits: 512
+    m_Bits: 768
   m_LayerOverridePriority: 0
   m_ForceSendLayers:
     serializedVersion: 2
@@ -17407,7 +17408,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2414152315520068811, guid: 1913559baa2254b4d8c390f967881ab9, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6370946690296109529, guid: 1913559baa2254b4d8c390f967881ab9, type: 3}
       propertyPath: m_LocalPosition.x

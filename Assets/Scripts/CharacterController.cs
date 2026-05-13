@@ -30,10 +30,14 @@ public class CharacterController : MonoBehaviour
     [Header("Combat")]
     [SerializeField] public Collider2D rightHitCollider;
     [SerializeField] public Collider2D leftHitCollider;
+    [SerializeField] float desactivatehitDelay = 0.25f; //Duración de la animación de ataque, se puede ajustar dependiendo de la animación que se use
 
     public bool canMove = true;
     public bool attacking = false;
     bool canJump = true;
+
+    private SpriteRenderer rightCollider;
+    private SpriteRenderer leftCollider;
 
     [Header("References")]
     GameManager gameManager;
@@ -46,6 +50,8 @@ public class CharacterController : MonoBehaviour
         anim = GetComponent<Animator>();
         spriteRenderer = GetComponent<SpriteRenderer>();     
         gameManager = FindAnyObjectByType<GameManager>();
+        rightCollider = rightHitCollider.GetComponent<SpriteRenderer>();
+        leftCollider = leftHitCollider.GetComponent<SpriteRenderer>();
 
     }
 
@@ -53,7 +59,10 @@ public class CharacterController : MonoBehaviour
     {
         rightHitCollider.enabled = false;
         leftHitCollider.enabled = false;
-       
+
+        rightCollider.color = new Color(1f, 1f, 0f, 0.3f);
+        leftCollider.color = new Color(1f, 1f, 0f, 0.3f);
+
     }
 
     const float Threshold = 0.1f;
@@ -154,13 +163,14 @@ public class CharacterController : MonoBehaviour
     #endregion
 
     #region Ataque Evento
-
-    const float desactivatehitDelay = 0.25f; //Duración de la animación de ataque, se puede ajustar dependiendo de la animación que se use
     public void OnAttackAnimation()
     {
         if (spriteRenderer.flipX) //Si el sprite esta volteado, se activa el hit collider de la izquierda, de lo contrario se activa el hit collider de la derecha
         {
             leftHitCollider.enabled = true;
+
+            leftCollider.color = new Color(1f, 0f, 0f, 0.5f);
+
 
             if (delayHitActivate)
             {
@@ -171,6 +181,7 @@ public class CharacterController : MonoBehaviour
         else
         {           
             rightHitCollider.enabled = true;
+            rightCollider.color = new Color(1f, 0f, 0f, 0.5f);
 
             if (delayHitActivate)
             {
@@ -185,7 +196,10 @@ public class CharacterController : MonoBehaviour
     {
         leftHitCollider.enabled = false;
         rightHitCollider.enabled = false;
-        
+
+        rightCollider.color = new Color(1f, 1f, 0f, 0.3f);
+        leftCollider.color = new Color(1f, 1f, 0f, 0.3f);
+
     }
 
    

@@ -20,6 +20,8 @@ public class PlayerController : MonoBehaviour
     private bool dead = false;
     private bool dieByZone = false; //Variable para saber si el jugador murió por caer en la DeadZone, esto es para aplicar un efecto de salto al morir en la DeadZone
     bool inmune = false;
+    private Coroutine attackCorutine;
+    private bool canceledAttack = false;
 
 
     [Header("References")]
@@ -72,9 +74,9 @@ public class PlayerController : MonoBehaviour
     }
     private void OnAttack(InputAction.CallbackContext context)
     {
-        if (!dead)
+        if (!dead && !characterController2D.attacking)
         {
-            StartCoroutine(Attack());
+            attackCorutine = StartCoroutine(Attack());
         }
        
     }
@@ -98,6 +100,8 @@ public class PlayerController : MonoBehaviour
 
     public IEnumerator Attack()
     {
+        canceledAttack = false;
+
         if (characterController2D.attacking == true)
         {
             yield break;
@@ -116,20 +120,46 @@ public class PlayerController : MonoBehaviour
             
         }
      
-        yield return new WaitForSeconds(0.15f);        
-
-        StartCoroutine(AfterAttack()); 
-
+        yield return new WaitForSeconds(0.15f); 
+        
+        if (canceledAttack)
+        {
+            yield break;
+        }
+        else
+        {
+            StartCoroutine(AfterAttack());
+        }
+       
     }
 
     public IEnumerator AfterAttack()
-    {
-      
+    {      
         yield return new WaitForSeconds(0.25f); //Tiempo de espera después de atacar, para que el enemigo no pueda atacar constantemente sin esperar un tiempo entre ataques, esto se puede ajustar dependiendo de la velocidad de ataque que se quiera para el enemigo
         characterController2D.attacking = false;
         characterController2D.canMove = true;
         inmune = false;
+        canceledAttack = false;
 
+        characterController2D.SetRawMove(rawMove);
+    }
+
+    public void CancelAttack() //Se supone que, como se sobreescribe la animación de attack por la hit, la aniamción no se alcanzará a ejecutar por completo, por ende, lo boz colliders no les pasará nada.
+    {
+        canceledAttack = true;
+        StopCoroutine(attackCorutine);
+        attackCorutine = null;
+        StartCoroutine(CanceledAttack());
+    }
+
+    public IEnumerator CanceledAttack()
+    {
+        inmune = true;
+        yield return new WaitForSeconds(0.2f); //Tiempo de espera después de atacar, para que el enemigo no pueda atacar constantemente sin esperar un tiempo entre ataques, esto se puede ajustar dependiendo de la velocidad de ataque que se quiera para el enemigo
+        characterController2D.attacking = false;
+        characterController2D.canMove = true;
+        inmune = false;
+        canceledAttack = false;
         characterController2D.SetRawMove(rawMove);
     }
 
@@ -162,13 +192,6 @@ public class PlayerController : MonoBehaviour
                 //Agregar efecto de sonido
             }
         }
-    }
-
-    public void CancelAttack() //Se supone que, como se sobreescribe la animación de attack por la hit, la aniamción no se alcanzará a ejecutar por completo, por ende, lo boz colliders no les pasará nada.
-    {      
-        characterController2D.attacking = true;
-        StopCoroutine(Attack());
-        StartCoroutine(AfterAttack());
     }
   
 

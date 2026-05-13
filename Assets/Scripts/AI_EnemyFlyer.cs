@@ -28,6 +28,8 @@ public class AI_EnemyFlyer : MonoBehaviour
     private bool dead = false;
     bool impulseActivate = false;
     bool inmune = false;
+    bool canceledAttack = false;
+    private Coroutine attackCoroutine;
 
     private float targetAttackY;
     public Transform jugadorReal;
@@ -78,7 +80,13 @@ public class AI_EnemyFlyer : MonoBehaviour
             if (Vector2.Distance(transform.position, target.position) < 0.3f)
             {
                 rawMove = Vector2.zero; //Se queda quieto
-                StartCoroutine(AttackCoroutine()); //Llama a la Corrutina Attack para que el enemigo ataque al jugador cuando esté lo suficientemente cerca, esto se puede ajustar dependiendo de la distancia que se quiera para que el enemigo ataque al jugador
+
+                if (!characterController2D.attacking)
+                {
+                    attackCoroutine = StartCoroutine(AttackCoroutine()); //Llama a la Corrutina Attack para que el enemigo ataque al jugador cuando esté lo suficientemente cerca
+                    characterController2D.rb.linearVelocityY = 0; //Ver si funciona.
+
+                }
             }
 
         }
@@ -108,10 +116,7 @@ public class AI_EnemyFlyer : MonoBehaviour
    
     public IEnumerator AttackCoroutine()
     {
-        if (characterController2D.attacking == true) //Si el personaje ya esta atacando, no se puede iniciar otro ataque
-        {
-            yield break; //Salir de la corrutina si ya está atacando
-        }      
+        canceledAttack = false;     
 
         characterController2D.canMove = false;
         characterController2D.attacking = true;
@@ -122,9 +127,16 @@ public class AI_EnemyFlyer : MonoBehaviour
       
         yield return new WaitForSeconds(0.45f); //Esperar a que termine la animación.
 
-        inmune = true;
+        if (canceledAttack)
+        {
+            yield break;
+        }
+        else
+        {
+            inmune = true;
 
-        AttackImpulseDown();
+            AttackImpulseDown();
+        }          
 
     }
 
@@ -161,23 +173,35 @@ public class AI_EnemyFlyer : MonoBehaviour
 
     public IEnumerator AfterAttack()
     { 
-        yield return new WaitForSeconds(0.2f);
+        yield return new WaitForSeconds(0.3f);
         inmune = false;
-        yield return new WaitForSeconds(1.3f); //Tiempo de espera después de atacar para recuperar movimiento y ataque.
+        canceledAttack = false;
+        yield return new WaitForSeconds(1f); //Tiempo de espera después de atacar para recuperar movimiento y ataque.
         anim.SetBool("IsRunning", false);
         characterController2D.attacking = false;
         characterController2D.canMove = true;
     }
 
     public void CancelAttack()
-    {
-        characterController2D.attacking = true;
-        characterController2D.canMove = false;
+    {       
+        StopCoroutine(attackCoroutine);
+        attackCoroutine = null;
 
-        StopCoroutine(AttackCoroutine());
-        StartCoroutine(AfterAttack());
+        StartCoroutine(AfterCanceled());
 
         Debug.Log("Ataque cancelado");
+    }
+
+    public IEnumerator AfterCanceled()
+    {
+        characterController2D.canMove = false;
+        anim.SetBool("IsRunning", false);
+        yield return new WaitForSeconds(0.3f); //Tiempo de espera después de atacar para recuperar movimiento y ataque.
+        canceledAttack = false;
+        inmune = false;
+        yield return new WaitForSeconds(0.7f); //Tiempo de espera después de atacar para recuperar movimiento y ataque.
+        characterController2D.attacking = false;
+        characterController2D.canMove = true;
     }
 
 

@@ -28,8 +28,11 @@ public class AIController : MonoBehaviour
     private bool dead = false;
     bool dieByZone = false; //Variable para saber si el enemigo murió por caer en la DeadZone, esto es para aplicar un efecto de salto al morir en la DeadZone
     bool inmune = false;
+    private bool  canceledAttack = false;
 
     private int attackDirection = 1;
+
+    private Coroutine attackCorutine;
 
     Collider2D enemyCollider;
     Collider2D playerCollider;
@@ -82,7 +85,12 @@ public class AIController : MonoBehaviour
            if (Mathf.Abs(transform.position.x - target.position.x) < 0.4f) //Para que se quede quieto al llegar al target, y no se quede vibrando por estar cambiando constantemente de dirección
            {
                 rawMove = Vector2.zero; //Se queda quieto
-                StartCoroutine(Attack()); //Llama a la función Attack para que el enemigo ataque al jugador cuando esté lo suficientemente cerca, esto se puede ajustar dependiendo de la distancia que se quiera para que el enemigo ataque al jugador
+
+                if (!characterController2D.attacking)
+                {
+                    attackCorutine = StartCoroutine(Attack()); //Llama a la función Attack para que el enemigo ataque al jugador cuando esté lo suficientemente cerca.
+
+                }
            }
 
            
@@ -111,6 +119,8 @@ public class AIController : MonoBehaviour
         {         
             characterController2D.rb.linearVelocityX = impulseForce * attackDirection; // Impulso hacia la derecha o izquierda dependiendo de la posición del target.
 
+            characterController2D.OnAttackAnimation();
+
             Debug.Log("Impulso de ataque aplicado"); //Aquí es donde se aplicaría el impulso al enemigo al atacar, para que se impulse hacia el jugador, esto se puede ajustar dependiendo de la fuerza del impulso que se quiera para el enemigo al atacar
 
         }
@@ -119,10 +129,7 @@ public class AIController : MonoBehaviour
 
     public IEnumerator Attack()
     {
-        if (characterController2D.attacking == true)
-        {
-            yield break; //Salir de la corrutina si ya está atacando
-        }
+        canceledAttack = false;
 
         characterController2D.canMove = false;
         characterController2D.attacking = true;
@@ -143,6 +150,11 @@ public class AIController : MonoBehaviour
 
             yield return new WaitForSeconds(delayAttack); //Tiempo de espera para aplicar el impulso.
 
+            if (canceledAttack) //Se rompe la corrutina si el ataque se cancela
+            {
+                yield break;
+            }
+
             inmune = true;
 
             AttackImpulse(); //Aplica el impulso al atacar        
@@ -153,25 +165,39 @@ public class AIController : MonoBehaviour
     public IEnumerator AfterAttack()
     {
         anim.SetBool("IsRunning", false);
-        yield return new WaitForSeconds(0.2f); //Tiempo de espera después de atacar para recuperar movimiento y ataque.
+        yield return new WaitForSeconds(0.3f); //Tiempo de espera después de atacar para recuperar movimiento y ataque.       
         inmune = false;
-        yield return new WaitForSeconds(1.3f); //Tiempo de espera después de atacar para recuperar movimiento y ataque.
+
+        yield return new WaitForSeconds(1.1f); //Tiempo de espera después de atacar para recuperar movimiento y ataque.
         characterController2D.attacking = false;
         characterController2D.canMove = true;
     }
 
     public void CancelAttack()
-    {
-       if (!inmune)
-       {
-            characterController2D.canMove = false;
-            characterController2D.attacking = true;
+    {            
+        if (attackCorutine != null)
+        {
+            canceledAttack = true;
+            StopCoroutine(attackCorutine);
 
-            StopCoroutine(Attack());
-            StartCoroutine(AfterAttack());
+            attackCorutine = null;
+
+            StartCoroutine(AfterCanceled());
             Debug.Log("Ataque cancelado");
-       }
-        
+        }
+     
+    }
+
+    public IEnumerator AfterCanceled()
+    {
+        characterController2D.canMove = false;
+        anim.SetBool("IsRunning", false);
+        yield return new WaitForSeconds(0.3f); //Tiempo de espera después de atacar para recuperar movimiento y ataque.
+        canceledAttack = false;
+        inmune = false;
+        yield return new WaitForSeconds(0.7f); //Tiempo de espera después de atacar para recuperar movimiento y ataque.
+        characterController2D.attacking = false;
+        characterController2D.canMove = true;
     }
 
 
