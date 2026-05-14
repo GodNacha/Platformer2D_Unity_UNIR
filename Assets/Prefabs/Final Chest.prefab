@@ -281,6 +281,7 @@ GameObject:
   - component: {fileID: 1890778525316742565}
   - component: {fileID: 1448064617627407756}
   - component: {fileID: 619898760923585472}
+  - component: {fileID: 5751102532303400655}
   m_Layer: 9
   m_Name: Final Chest
   m_TagString: Untagged
@@ -477,7 +478,7 @@ BoxCollider2D:
     m_Bits: 0
   m_ExcludeLayers:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 768
   m_LayerOverridePriority: 0
   m_ForceSendLayers:
     serializedVersion: 2
@@ -507,3 +508,18 @@ BoxCollider2D:
   m_AutoTiling: 0
   m_Size: {x: 0.33137298, y: 0.19541812}
   m_EdgeRadius: 0
+--- !u!114 &5751102532303400655
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8867463668021520457}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cbbd00b80adbe7d4aa4856a532d12052, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::BigChest
+  isOpen: 0
+  feedbackText: {fileID: 0}
+  feedbackTextAnimator: {fileID: 0}

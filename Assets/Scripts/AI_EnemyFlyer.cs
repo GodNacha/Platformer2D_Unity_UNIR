@@ -143,7 +143,7 @@ public class AI_EnemyFlyer : MonoBehaviour
         bool grounded = hit.collider != null;
       
         // Si toca el suelo mientras ataca
-        if (grounded && characterController2D.attacking && impulseActivate && transform.position.y <= targetAttackY + 0.5f)
+        if (grounded && characterController2D.attacking && impulseActivate && transform.position.y <= targetAttackY + 0.3f)
         {
             StopAttackImpulse();
         }
@@ -276,6 +276,8 @@ public class AI_EnemyFlyer : MonoBehaviour
     public void Dead()
     {
         dead = true;
+
+        StopAllCoroutines(); //Detiene todas las corrutinas para evitar que el enemigo siga atacando o moviéndose después de morir.
 
         anim.SetTrigger("Dead"); //Animación de muerte      
         Physics2D.IgnoreCollision(enemyCollider, playerCollider, true); //Esto hace que el se ignoren las colisiones entre el enemigo y el jugador tras morir.

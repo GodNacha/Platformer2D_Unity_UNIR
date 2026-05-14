@@ -15,7 +15,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField] public int coins = 0;
     [SerializeField] public int lifes = 3;
     [SerializeField] private Animator anim;
-
+    [SerializeField] float inmutyTime = 0.35f; //Tiempo de inmunidad después de recibir daño
 
     private bool dead = false;
     private bool dieByZone = false; //Variable para saber si el jugador murió por caer en la DeadZone, esto es para aplicar un efecto de salto al morir en la DeadZone
@@ -135,12 +135,12 @@ public class PlayerController : MonoBehaviour
     }
 
     public IEnumerator AfterAttack()
-    {      
-        yield return new WaitForSeconds(0.23f); //Tiempo de espera después de atacar, para que el enemigo no pueda atacar constantemente sin esperar un tiempo entre ataques, esto se puede ajustar dependiendo de la velocidad de ataque que se quiera para el enemigo
+    {
+        
+        yield return new WaitForSeconds(0.2f); //Tiempo de espera después de atacar, para que el enemigo no pueda atacar constantemente sin esperar un tiempo entre ataques, esto se puede ajustar dependiendo de la velocidad de ataque que se quiera para el enemigo
         characterController2D.attacking = false;
-        characterController2D.canMove = true;
-        inmune = false;
-        canceledAttack = false;
+        characterController2D.canMove = true; 
+        canceledAttack = false;       
 
         characterController2D.SetRawMove(rawMove);
     }
@@ -154,14 +154,19 @@ public class PlayerController : MonoBehaviour
     }
 
     public IEnumerator CanceledAttack()
-    {
-        inmune = true;
+    {      
         yield return new WaitForSeconds(0.2f); //Tiempo de espera después de atacar, para que el enemigo no pueda atacar constantemente sin esperar un tiempo entre ataques, esto se puede ajustar dependiendo de la velocidad de ataque que se quiera para el enemigo
-        characterController2D.attacking = false;
-        characterController2D.canMove = true;
-        inmune = false;
+        characterController2D.attacking = false;       
         canceledAttack = false;
-        characterController2D.SetRawMove(rawMove);
+    }
+
+    public IEnumerator Inumity()
+    {
+        characterController2D.movementSpeed = characterController2D.movementSpeed - 1f; //Se reduce la velocidad de moivimiento;
+        inmune = true;
+        yield return new WaitForSeconds(inmutyTime); //Tiempo de inmunidad después de recibir daño, para que el enemigo no pueda atacar constantemente sin esperar un tiempo entre ataques, esto se puede ajustar dependiendo de la velocidad de ataque que se quiera para el enemigo
+        inmune = false;
+        characterController2D.movementSpeed = characterController2D.movementSpeed + 1f;
     }
 
     public void Damage()
@@ -170,6 +175,9 @@ public class PlayerController : MonoBehaviour
         {
             lifes--;
             textLifes.text = "X " + lifes;
+
+            characterController2D.canMove = true; //Para que se pueda mover y no quede estancado
+            characterController2D.SetRawMove(rawMove);
 
             if (characterController2D.attacking && !inmune)
             {
@@ -188,10 +196,13 @@ public class PlayerController : MonoBehaviour
             else
             {
                 anim.SetTrigger("Hit"); //Animación de recibir daño
-                StartCoroutine(AfterAttack()); 
+                StartCoroutine(AfterAttack());
+                StartCoroutine(Inumity());
 
                 //Agregar efecto de sonido
             }
+
+
         }
     }
 

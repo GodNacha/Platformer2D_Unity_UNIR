@@ -32,6 +32,7 @@ public class GameManager : MonoBehaviour
 
         player.enabled = false; // Desactiva el script del jugador para evitar que siga moviéndose o atacando      
 
+        Cursor.visible = true;
     }
 
     public void Win()
@@ -43,6 +44,8 @@ public class GameManager : MonoBehaviour
 
         endGame = true;
         winUI.SetActive(true);
+
+        Cursor.visible = true;
 
     }
 }

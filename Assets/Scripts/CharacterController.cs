@@ -9,7 +9,7 @@ public class CharacterController : MonoBehaviour
 {
     public Rigidbody2D rb;
     Animator anim;
-    SpriteRenderer spriteRenderer;
+    [SerializeField] public SpriteRenderer spriteRenderer;
 
 
     [Header("Stats")]
