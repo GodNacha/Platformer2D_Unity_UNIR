@@ -8,10 +8,11 @@ public class OnTrigger : MonoBehaviour
     public string targetTag;
 
     [Header("Trigger Settings")]
-    [SerializeField] private bool triggerOnce = false; 
+    [SerializeField] private bool triggerOnce = false;
+    [SerializeField] private bool useOnTriggerStay = false; //Si se activa, el evento se disparará cada frame que el jugador esté dentro del trigger, en lugar de solo una vez al entrar.
 
     [Header("Event After OnTriggered")]
-    public UnityEvent onTriggerEnter;
+    public UnityEvent onTriggerAction;
 
     private Collider2D triggerCollider;
 
@@ -22,7 +23,7 @@ public class OnTrigger : MonoBehaviour
 
     public void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.CompareTag(targetTag))
+        if (collision.CompareTag(targetTag) && !useOnTriggerStay)
         {
             if (triggerOnce) //Se apaga el collider después de la primera vez que se activa, para evitar que se vuelva a activar si el jugador vuelve a entrar en el trigger.
             {
@@ -33,8 +34,16 @@ public class OnTrigger : MonoBehaviour
         }
     }
 
+    public void OnTriggerStay2D(Collider2D collision)
+    {
+        if (collision.CompareTag(targetTag) && useOnTriggerStay)
+        {
+            TriggerAction();
+        }
+    }
+
     internal void TriggerAction()
     {
-        onTriggerEnter?.Invoke(); 
+        onTriggerAction?.Invoke(); 
     }
 }

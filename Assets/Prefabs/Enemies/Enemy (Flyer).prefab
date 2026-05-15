@@ -286,6 +286,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::CharacterController
   rb: {fileID: 0}
+  spriteRenderer: {fileID: 0}
   movementSpeed: 1
   jumpVelocity: 3
   lifes: 3
@@ -380,7 +381,7 @@ Rigidbody2D:
     m_Bits: 0
   m_Interpolate: 0
   m_SleepingMode: 1
-  m_CollisionDetection: 0
+  m_CollisionDetection: 1
   m_Constraints: 4
 --- !u!70 &2819594603895113629
 CapsuleCollider2D:

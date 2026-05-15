@@ -699,7 +699,7 @@ MonoBehaviour:
   rb: {fileID: 2075599375618376437}
   spriteRenderer: {fileID: 0}
   movementSpeed: 2
-  jumpVelocity: 4.5
+  jumpVelocity: 4
   lifes: 3
   isEnemy: 0
   isEnemyFryer: 0
@@ -758,6 +758,7 @@ MonoBehaviour:
   coins: 0
   lifes: 3
   anim: {fileID: 4709269640051224531}
+  inmutyTime: 0.35
   characterController2D: {fileID: 0}
   gameManager: {fileID: 0}
   move: {fileID: -1680190386980627800, guid: 2bcd2660ca9b64942af0de543d8d7100, type: 3}

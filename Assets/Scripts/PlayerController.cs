@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using TMPro;
+using Unity.Cinemachine;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -27,6 +28,8 @@ public class PlayerController : MonoBehaviour
     [Header("References")]
     [SerializeField] CharacterController characterController2D;
     [SerializeField] GameManager gameManager;
+    [SerializeField] CinemachineCamera cinemachineCamera;
+
 
     [Header("Inputs")]
     [SerializeField] InputActionReference move;
@@ -38,6 +41,11 @@ public class PlayerController : MonoBehaviour
         characterController2D = GetComponent<CharacterController>();
         anim = GetComponent<Animator>();
         gameManager = FindAnyObjectByType<GameManager>();
+        
+        if (cinemachineCamera == null)
+        {
+            Debug.LogWarning("Cinemachine Camera Player reference is missing. Attempting to find one in the scene.");
+        }
 
         move.action.performed += OnMove;
         move.action.canceled += OnMove;
@@ -219,7 +227,9 @@ public class PlayerController : MonoBehaviour
         dead = true;    
 
         anim.SetTrigger("Dead"); //Animación de muerte
-                                 //
+
+        cinemachineCamera.Follow = null; //Desvincula la cámara del jugador para que no siga al jugador después de morir
+
         gameManager.GameOver(); //Llama a la función GameOver del GameManager para mostrar la pantalla de Game Over después de morir
 
         if (dieByZone)

@@ -118,7 +118,7 @@ public class AIController : MonoBehaviour
                 rawMove = Vector2.right;
            }
 
-           if (Mathf.Abs(transform.position.x - target.position.x) < 0.4f) //Para que se quede quieto al llegar al target, y no se quede vibrando por estar cambiando constantemente de dirección
+           if (Mathf.Abs(transform.position.x - target.position.x) < 0.5f) //Para que se quede quieto al llegar al target, y no se quede vibrando por estar cambiando constantemente de dirección
            {
                 rawMove = Vector2.zero; //Se queda quieto
 
@@ -205,7 +205,7 @@ public class AIController : MonoBehaviour
         yield return new WaitForSeconds(0.3f); //Tiempo de espera después de atacar para recuperar movimiento y ataque.       
         inmune = false;
 
-        yield return new WaitForSeconds(1.1f); //Tiempo de espera después de atacar para recuperar movimiento y ataque.
+        yield return new WaitForSeconds(1.3f); //Tiempo de espera después de atacar para recuperar movimiento y ataque.
         characterController2D.attacking = false;
         characterController2D.canMove = true;
     }
@@ -232,7 +232,7 @@ public class AIController : MonoBehaviour
         yield return new WaitForSeconds(0.3f); //Tiempo de espera después de atacar para recuperar movimiento y ataque.
         canceledAttack = false;
         inmune = false;
-        yield return new WaitForSeconds(0.7f); //Tiempo de espera después de atacar para recuperar movimiento y ataque.
+        yield return new WaitForSeconds(1f); //Tiempo de espera después de atacar para recuperar movimiento y ataque.
         characterController2D.attacking = false;
         characterController2D.canMove = true;
     }
