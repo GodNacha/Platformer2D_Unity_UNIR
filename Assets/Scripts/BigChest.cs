@@ -70,7 +70,7 @@ public class BigChest : MonoBehaviour
     void OpenAnimation()
     {
         animChest.SetTrigger("Open");
-        animTextChest.SetTrigger("Trasition");
+        animTextChest.SetTrigger("Transition");
         splashCoins.Splash();
 
     }

@@ -39,6 +39,7 @@ public class OnTrigger : MonoBehaviour
         if (collision.CompareTag(targetTag) && useOnTriggerStay)
         {
             TriggerAction();
+            Debug.Log("Trigger Stay Activated"); // Debug para verificar que el evento se dispara cada frame mientras el jugador esté dentro del trigger
         }
     }
 

@@ -12,6 +12,8 @@ public class ScenesManager : MonoBehaviour
 
     private CanvasGroup fadeCanvasGroup;
 
+    public bool isTransitioning = false;
+
     private void Awake()
     {
         if (fadePanel == null)
@@ -31,6 +33,7 @@ public class ScenesManager : MonoBehaviour
         {
             Cursor.visible = false; //Hace invisible el cursor en el resto de escenas
         }
+
     }
 
     void Start()
@@ -42,7 +45,7 @@ public class ScenesManager : MonoBehaviour
 
         StartCoroutine(FadeIn());
 
-
+        Time.timeScale = 1; // Para que ninguna escena inicie pausada
     }
 
     public void LoadScene(string sceneName)
@@ -57,6 +60,7 @@ public class ScenesManager : MonoBehaviour
    
     public IEnumerator FadeIn()
     {
+        isTransitioning = true;
         float elapsedTime = 0f;
         while (elapsedTime < fadeDuration)
         {
@@ -65,12 +69,14 @@ public class ScenesManager : MonoBehaviour
             yield return null;
         }
         fadeCanvasGroup.alpha = 0f; 
-        fadeCanvasGroup.blocksRaycasts = false; 
+        fadeCanvasGroup.blocksRaycasts = false;
+        isTransitioning = false;
 
     }
 
     public IEnumerator FadeOut(string sceneName)
     {
+        isTransitioning = true;
         fadeCanvasGroup.blocksRaycasts = true; 
 
         yield return new WaitForSeconds(delayFadeOut); //Espera un tiempo antes de iniciar el fade out, para que el jugador pueda ver la animación.
@@ -86,5 +92,10 @@ public class ScenesManager : MonoBehaviour
         SceneManager.LoadScene(sceneName);
 
     }
-    
+
+    public void JustLoadScene(string sceneName)
+    {
+        SceneManager.LoadScene(sceneName);
+    }
+
 }

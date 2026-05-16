@@ -1,25 +1,32 @@
+using JetBrains.Annotations;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.Playables;
 
-public class Pause : MonoBehaviour
+public class Cinematic : MonoBehaviour
 {
-    [Header("Inputs")]  
+    [Header("Inputs")]
     [SerializeField] InputActionReference pauseKey;
 
     [Header("UI Reference")]
     [SerializeField] GameObject pausePanel;
 
+    [Header("Timeline Reference")]
+    [SerializeField] PlayableDirector cinematicDirector;
+
+    [Header("Animators")]
+    public Animator[] animators;
+
+    private bool canPause = false;
     private bool isPaused = false;
-    private GameManager gameManager;
-    private PlayerController playerController;
     private ScenesManager scenesManager;
 
     private void Awake()
     {
         pauseKey.action.performed += OnPause;
-        playerController = FindAnyObjectByType<PlayerController>();
-        gameManager = FindAnyObjectByType<GameManager>();
         scenesManager = FindAnyObjectByType<ScenesManager>();
+        cinematicDirector = GetComponent<PlayableDirector>();
 
         if (pausePanel == null)
         {
@@ -27,8 +34,10 @@ public class Pause : MonoBehaviour
         }
 
         pausePanel.SetActive(false); // Asegura que el panel de pausa esté desactivado al iniciar el juego
+
+        Time.timeScale = 1;
     }
-    
+
     void OnPause(InputAction.CallbackContext context)
     {
         if (isPaused == true)
@@ -43,25 +52,36 @@ public class Pause : MonoBehaviour
 
     public void Resume() //Opcion para UI
     {
-        isPaused = false;
+        isPaused = false;        
         Time.timeScale = 1; //Reanuda el juego.
         pausePanel.SetActive(false); //Desactiva el panel de pausa al reanudar el juego
         Cursor.visible = false;
-        playerController.OnEnable(); //Se activan los controles
+        cinematicDirector.Play(); // Reanuda la cinemática
+
+        foreach (Animator anim in animators)
+            anim.enabled = true;
     }
 
     public void PauseGame()
-    {
-        if (gameManager.endGame || scenesManager.isTransitioning) return; // Evita pausar el juego si ya ha terminado
-
-
+    {      
+        if (scenesManager.isTransitioning || !canPause) return; // Evita pausar si hay una transición en curso.
         isPaused = true;
-        Time.timeScale = 0; //Pausa el juego.
+        Time.timeScale = 0; //Pausa el juego (Físicas y tal)
         pausePanel.SetActive(true); //Activa el panel de pausa al pausar el juego
         Cursor.visible = true;
-        playerController.OnDisable(); //Se desactivan los controles
+        cinematicDirector.Pause(); // Pausa la cinemática
+
+        foreach (Animator anim in animators)
+            anim.enabled = false;
     }
 
+    public void NoPauses()
+    {
+        canPause = false;
+    }
 
-
+    public void YesPause()
+    {
+        canPause = true;
+    }
 }

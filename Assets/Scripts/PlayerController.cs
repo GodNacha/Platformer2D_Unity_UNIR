@@ -63,7 +63,7 @@ public class PlayerController : MonoBehaviour
     
 
 
-    private void OnEnable()
+    public void OnEnable()
     {
         move.action.Enable();
         jump.action.Enable();
