@@ -22,11 +22,17 @@ public class Cinematic : MonoBehaviour
     private bool isPaused = false;
     private ScenesManager scenesManager;
 
+    private AudioSource audioSource;
+
+    [Header("Audio")]
+    public AudioClip pauseClip;
+
     private void Awake()
     {
         pauseKey.action.performed += OnPause;
         scenesManager = FindAnyObjectByType<ScenesManager>();
         cinematicDirector = GetComponent<PlayableDirector>();
+        audioSource = GetComponent<AudioSource>();
 
         if (pausePanel == null)
         {
@@ -60,6 +66,9 @@ public class Cinematic : MonoBehaviour
 
         foreach (Animator anim in animators)
             anim.enabled = true;
+
+        audioSource.PlayOneShot(pauseClip); // Reproduce el sonido de pausa al pausar el juego
+
     }
 
     public void PauseGame()
@@ -73,6 +82,8 @@ public class Cinematic : MonoBehaviour
 
         foreach (Animator anim in animators)
             anim.enabled = false;
+
+        audioSource.PlayOneShot(pauseClip); // Reproduce el sonido de pausa al pausar el juego
     }
 
     public void NoPauses()

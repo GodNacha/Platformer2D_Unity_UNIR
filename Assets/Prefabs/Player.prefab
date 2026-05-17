@@ -756,9 +756,9 @@ MonoBehaviour:
   textLifes: {fileID: 0}
   textCoins: {fileID: 0}
   coins: 0
-  lifes: 3
+  lifes: 5
   anim: {fileID: 4709269640051224531}
-  inmutyTime: 0.35
+  inmutyTime: 0.6
   characterController2D: {fileID: 0}
   gameManager: {fileID: 0}
   cinemachineCamera: {fileID: 0}
