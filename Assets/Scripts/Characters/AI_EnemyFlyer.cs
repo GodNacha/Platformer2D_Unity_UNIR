@@ -97,7 +97,7 @@ public class AI_EnemyFlyer : MonoBehaviour
 
 
         //Patrullaje
-        if (!chesing && !dead && !gameManager.endGame)
+        if (!chesing && !dead && !gameManager.endGame && characterController2D.canMove)
         {
             waypointPatrol.UpdatePatrol();
 
@@ -129,7 +129,7 @@ public class AI_EnemyFlyer : MonoBehaviour
 
 
         //Persecusión
-        if (target && chesing && !dead && !gameManager.endGame && !impulseActivate && !attackStarted)
+        if (target && chesing && !dead && !gameManager.endGame && !impulseActivate && !attackStarted && characterController2D.canMove)
         {
             waypointPatrol.StopWaiting();
    
@@ -155,7 +155,7 @@ public class AI_EnemyFlyer : MonoBehaviour
 
         }
 
-        if (characterController2D.attacking && impulseActivate && !impulsing)
+        if (characterController2D.attacking && impulseActivate && !impulsing && !characterController2D.canMove)
         {
             impulsing = true;
             characterController2D.rb.linearVelocity = new Vector2(0, -attackDownSpeed);
@@ -254,16 +254,16 @@ public class AI_EnemyFlyer : MonoBehaviour
     }
 
     public IEnumerator AfterAttack()
-    { 
+    {
+        characterController2D.attacking = false;
         yield return new WaitForSeconds(0.3f);
         inmune = false;
         canceledAttack = false;
         yield return new WaitForSeconds(1.3f); //Tiempo de espera después de atacar para recuperar movimiento y ataque.
         anim.SetBool("IsRunning", false);
-        characterController2D.attacking = false;
-        characterController2D.canMove = true;
         attackStarted = false;
         impulsing = false;
+        characterController2D.canMove = true;
     }
 
     public void CancelAttack()
@@ -278,16 +278,16 @@ public class AI_EnemyFlyer : MonoBehaviour
 
     public IEnumerator AfterCanceled()
     {
+        characterController2D.attacking = false;
         characterController2D.canMove = false;
         anim.SetBool("IsRunning", false);
         yield return new WaitForSeconds(0.3f); //Tiempo de espera después de atacar para recuperar movimiento y ataque.
         canceledAttack = false;
         inmune = false;
         yield return new WaitForSeconds(0.7f); //Tiempo de espera después de atacar para recuperar movimiento y ataque.
-        characterController2D.attacking = false;
-        characterController2D.canMove = true;
         attackStarted = false;
         impulsing = false;
+        characterController2D.canMove = true;
     }
 
 
@@ -319,7 +319,7 @@ public class AI_EnemyFlyer : MonoBehaviour
             {
 
                 anim.SetTrigger("Hit"); //Animación de recibir daño
-                StartCoroutine(AfterAttack());
+              //  StartCoroutine(AfterAttack());
                 audioFlyer.PlayOneShot(hitClip);
                 //Agregar efecto de sonido
             }
