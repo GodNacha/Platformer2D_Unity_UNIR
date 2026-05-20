@@ -60855,17 +60855,9 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 305640784}
     - target: {fileID: 964286943936404209, guid: 2a9ec067d542aae469d1b7374e3d4691, type: 3}
-      propertyPath: chestRange
-      value: 2.8
-      objectReference: {fileID: 0}
-    - target: {fileID: 964286943936404209, guid: 2a9ec067d542aae469d1b7374e3d4691, type: 3}
       propertyPath: jugadorReal
       value: 
       objectReference: {fileID: 370565201}
-    - target: {fileID: 964286943936404209, guid: 2a9ec067d542aae469d1b7374e3d4691, type: 3}
-      propertyPath: detectionRange
-      value: 1.72
-      objectReference: {fileID: 0}
     - target: {fileID: 1415622501447276141, guid: 2a9ec067d542aae469d1b7374e3d4691, type: 3}
       propertyPath: spreadCustomCurve.m_Curve.Array.data[0].value
       value: 0.41666666
@@ -60880,11 +60872,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4496829484424573743, guid: 2a9ec067d542aae469d1b7374e3d4691, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 9.8
+      value: -2.8
       objectReference: {fileID: 0}
     - target: {fileID: 4496829484424573743, guid: 2a9ec067d542aae469d1b7374e3d4691, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 3.19
+      value: -0.35
       objectReference: {fileID: 0}
     - target: {fileID: 4496829484424573743, guid: 2a9ec067d542aae469d1b7374e3d4691, type: 3}
       propertyPath: m_LocalPosition.z

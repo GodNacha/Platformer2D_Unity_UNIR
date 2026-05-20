@@ -39,6 +39,7 @@ public class AI_EnemyFlyer : MonoBehaviour
     bool inmune = false;
     bool canceledAttack = false;
     private Coroutine attackCoroutine;
+    bool attackStarted = false;
 
     private float targetAttackY;
     public Transform jugadorReal;
@@ -64,6 +65,8 @@ public class AI_EnemyFlyer : MonoBehaviour
     private void Update()
     {
         Vector2 rawMove = Vector2.zero;
+
+        IsGrounded(); //Llamar a la función IsGrounded para verificar si el enemigo está tocando el suelo
 
         if (target && !gameManager.endGame)
         {
@@ -117,21 +120,23 @@ public class AI_EnemyFlyer : MonoBehaviour
 
 
         //Persecusión
-        if (target && chesing && !dead && !gameManager.endGame && !impulseActivate)
+        if (target && chesing && !dead && !gameManager.endGame && !impulseActivate && !attackStarted)
         {
             waypointPatrol.StopWaiting();
    
             Vector2 direction = (target.position - transform.position).normalized; //Calcula la dirección normalizada (X-Y)
             rawMove = direction;
 
-            if (Vector2.Distance(transform.position, target.position) < 0.3f)
+            if (Vector2.Distance(transform.position, target.position) < 0.15f)
             {
                 rawMove = Vector2.zero; //Se queda quieto
 
-                if (!characterController2D.attacking && !dead)
+                if (!characterController2D.attacking && !dead && !attackStarted)
                 {
+                    attackStarted = true;
                     attackCoroutine = StartCoroutine(AttackCoroutine()); //Llama a la Corrutina Attack para que el enemigo ataque al jugador cuando esté lo suficientemente cerca
-                    characterController2D.rb.linearVelocityY = 0; //Ver si funciona.
+                    characterController2D.rb.linearVelocity = Vector2.zero;
+                    characterController2D.SetRawMove(Vector2.zero);
 
                 }
             }
@@ -140,7 +145,9 @@ public class AI_EnemyFlyer : MonoBehaviour
 
         if (characterController2D.attacking && impulseActivate)
         {
-            characterController2D.rb.linearVelocity = new Vector2(0, -attackDownSpeed);
+            Vector2 impulseDown = new Vector2(0, -attackDownSpeed);
+
+            rawMove = impulseDown;
         }
 
         characterController2D.SetRawMove(rawMove);
@@ -148,27 +155,29 @@ public class AI_EnemyFlyer : MonoBehaviour
 
     public bool IsGrounded()
     {
-        RaycastHit2D hit = Physics2D.Raycast(transform.position, Vector2.down, groundCheckDistance, groundLayerMask); //Esto es para detectar si el enemigo tocó el suelo.        
+      //  RaycastHit2D hit = Physics2D.Raycast(transform.position, Vector2.down, groundCheckDistance, groundLayerMask); //Esto es para detectar si el enemigo tocó el suelo.
+                                                                                                                      
+        Collider2D hit = Physics2D.OverlapCircle(transform.position, groundCheckDistance, groundLayerMask); //Se utiliza un OverlapCircle en lugar de un Raycast para detectar el suelo, ya que el otro generaba problemas de detección.
 
-        bool grounded = hit.collider != null;
+        bool grounded = hit != null;
       
         // Si toca el suelo mientras ataca
-        if (grounded && characterController2D.attacking && impulseActivate && transform.position.y <= targetAttackY + 0.3f)
+        if (grounded && characterController2D.attacking && impulseActivate)
         {
             StopAttackImpulse();
         }
 
         return grounded;
+
+        
     }
    
     public IEnumerator AttackCoroutine()
     {
         canceledAttack = false;     
 
-        characterController2D.canMove = false;
+       // characterController2D.canMove = false;
         characterController2D.attacking = true;
-
-        characterController2D.SetRawMove(Vector2.zero); //Detiene el movimiento horizontal del enemigo al iniciar el ataque, para que no siga moviéndose mientras ataca
 
         anim.SetTrigger("Pre-Attack"); //Animación de pre-Ataque
 
@@ -196,7 +205,6 @@ public class AI_EnemyFlyer : MonoBehaviour
 
         if (target && inmune)
         {
-            targetAttackY = jugadorReal.position.y;
 
             impulseActivate = true;
 
@@ -214,6 +222,9 @@ public class AI_EnemyFlyer : MonoBehaviour
 
     public void StopAttackImpulse() //Llamar en un UnityEvent? O en una corrutina?
     {
+        if (!impulseActivate)
+            return;
+
         impulseActivate = false; //Detiene el impulso hacia abajo del ataque, para que el enemigo se quede quieto después de tocar el suelo, y haga la animación de ataque final.
 
         anim.SetTrigger("Hit Floor"); //Animación de golpe al suelo.
@@ -239,6 +250,7 @@ public class AI_EnemyFlyer : MonoBehaviour
         anim.SetBool("IsRunning", false);
         characterController2D.attacking = false;
         characterController2D.canMove = true;
+        attackStarted = false;
     }
 
     public void CancelAttack()
@@ -261,6 +273,7 @@ public class AI_EnemyFlyer : MonoBehaviour
         yield return new WaitForSeconds(0.7f); //Tiempo de espera después de atacar para recuperar movimiento y ataque.
         characterController2D.attacking = false;
         characterController2D.canMove = true;
+        attackStarted = false;
     }
 
 
@@ -346,6 +359,10 @@ public class AI_EnemyFlyer : MonoBehaviour
 
         // Gizmo de rango circular para mostrar el rango de persecusión
         Gizmos.DrawWireSphere(transform.position, chestRange);
+
+        Gizmos.color = Color.pink;
+
+        Gizmos.DrawWireSphere(transform.position, groundCheckDistance);
 
     }
 

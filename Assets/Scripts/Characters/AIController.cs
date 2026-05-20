@@ -35,6 +35,9 @@ public class AIController : MonoBehaviour
 
     private Coroutine attackCorutine;
 
+    private bool attackStarted = false;
+
+
     Collider2D enemyCollider;
     Collider2D playerCollider;
 
@@ -114,7 +117,7 @@ public class AIController : MonoBehaviour
 
         //Persiguiendo al jugador
 
-        if (target && chesing && !dead && !gameManager.endGame)
+        if (target && chesing && !dead && !gameManager.endGame && !attackStarted)
         {
             waypointPatrol.StopWaiting(); //Se corta la espera del waypoint para empezar a seguir al jugador.
 
@@ -131,8 +134,9 @@ public class AIController : MonoBehaviour
            {
                 rawMove = Vector2.zero; //Se queda quieto
 
-                if (!characterController2D.attacking && !dead)
+                if (!characterController2D.attacking && !dead && !attackStarted)
                 {
+                    attackStarted = true;
                     attackCorutine = StartCoroutine(Attack()); //Llama a la función Attack para que el enemigo ataque al jugador cuando esté lo suficientemente cerca.
 
                 }
@@ -223,6 +227,7 @@ public class AIController : MonoBehaviour
         yield return new WaitForSeconds(1.3f); //Tiempo de espera después de atacar para recuperar movimiento y ataque.
         characterController2D.attacking = false;
         characterController2D.canMove = true;
+        attackStarted = false;
     }
 
     public void CancelAttack()
@@ -250,6 +255,7 @@ public class AIController : MonoBehaviour
         yield return new WaitForSeconds(1f); //Tiempo de espera después de atacar para recuperar movimiento y ataque.
         characterController2D.attacking = false;
         characterController2D.canMove = true;
+        attackStarted = false;
     }
 
 

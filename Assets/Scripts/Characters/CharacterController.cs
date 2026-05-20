@@ -192,7 +192,7 @@ public class CharacterController : MonoBehaviour
         }
         else       
         {
-            this.rawMove = Vector2.zero; //Si no se puede mover, el rawMove se establece en cero para que el personaje no se mueva.
+           // this.rawMove = Vector2.zero; //Si no se puede mover, el rawMove se establece en cero para que el personaje no se mueva.
 
             audioMovement.loop = false;
         }

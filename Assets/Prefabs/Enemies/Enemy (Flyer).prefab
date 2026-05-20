@@ -356,8 +356,8 @@ MonoBehaviour:
   lifes: 3
   anim: {fileID: 8842710007515771348}
   attackDownSpeed: 3
-  detectionRange: 2
-  chestRange: 4
+  detectionRange: 1.72
+  chestRange: 2.8
   groundLayerMask:
     serializedVersion: 2
     m_Bits: 8
