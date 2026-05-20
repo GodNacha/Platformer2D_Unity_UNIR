@@ -1,6 +1,6 @@
 using TMPro;
 using UnityEngine;
-using static UnityEditor.PlayerSettings.SplashScreen;
+
 
 public class GameManager : MonoBehaviour
 {
