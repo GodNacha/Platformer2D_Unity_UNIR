@@ -237,7 +237,7 @@ public class AIController : MonoBehaviour
         yield return new WaitForSeconds(0.3f); //Tiempo de espera después de atacar para recuperar movimiento y ataque.       
         inmune = false;
 
-        yield return new WaitForSeconds(1.3f); //Tiempo de espera después de atacar para recuperar movimiento y ataque.
+        yield return new WaitForSeconds(1.1f); //Tiempo de espera después de atacar para recuperar movimiento y ataque.
         characterController2D.attacking = false;
         characterController2D.canMove = true;
         attackStarted = false;
@@ -265,7 +265,7 @@ public class AIController : MonoBehaviour
         yield return new WaitForSeconds(0.3f); //Tiempo de espera después de atacar para recuperar movimiento y ataque.
         canceledAttack = false;
         inmune = false;
-        yield return new WaitForSeconds(1.3f); //Tiempo de espera después de atacar para recuperar movimiento y ataque.
+        yield return new WaitForSeconds(1f); //Tiempo de espera después de atacar para recuperar movimiento y ataque.
         characterController2D.attacking = false;
         characterController2D.canMove = true;
         attackStarted = false;
@@ -298,7 +298,7 @@ public class AIController : MonoBehaviour
             else
             {
                 anim.SetTrigger("Hit"); //Animación de recibir daño
-                StartCoroutine(AfterAttack());
+              //  StartCoroutine(AfterAttack());
                 audioMushroom.PlayOneShot(hitClip);
             }
         }
@@ -306,8 +306,8 @@ public class AIController : MonoBehaviour
 
     public void Dead()
     {
-        dead = true;      
-
+        dead = true; 
+        
         anim.SetTrigger("Dead"); //Animación de muerte      
         Physics2D.IgnoreCollision(enemyCollider, playerCollider, true); //Esto hace que el se ignoren las colisiones entre el enemigo y el jugador tras morir.
 
