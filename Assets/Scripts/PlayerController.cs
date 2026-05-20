@@ -247,6 +247,8 @@ public class PlayerController : MonoBehaviour
         textLifes.text = "X " + lifes;
 
         audioPlayer.PlayOneShot(lifeClip);
+
+        animLifeUI.SetTrigger("AddLife");
     }
 
 

@@ -37,7 +37,6 @@ public class CharacterController : MonoBehaviour
     public bool canMove = true;
     public bool attacking = false;
     bool canJump = true;
-    private bool isMoving = false;
 
     private bool touchedFloor = true;
 
