@@ -18,7 +18,9 @@ public class CharacterController : MonoBehaviour
     [SerializeField] public int lifes = 3;
     [SerializeField] public bool isEnemy = false; //Esto es para diferenciar entre el jugador y los enemigos.
     [SerializeField] public bool isEnemyFryer = false;
-    [SerializeField] bool delayHitActivate = true; 
+    [SerializeField] bool delayHitActivate = true;
+    [SerializeField] bool visualHitColliderActivate = false;
+
 
     [Header("Srite Settings")]
     [SerializeField] public bool facingRightByDefault = true;
@@ -75,9 +77,12 @@ public class CharacterController : MonoBehaviour
         rightHitCollider.enabled = false;
         leftHitCollider.enabled = false;
 
-        rightCollider.color = new Color(1f, 1f, 0f, 0.3f);
-        leftCollider.color = new Color(1f, 1f, 0f, 0.3f);
+        if (visualHitColliderActivate)
+        {
+            rightCollider.color = new Color(1f, 1f, 0f, 0.3f);
+            leftCollider.color = new Color(1f, 1f, 0f, 0.3f);
 
+        }
     }
 
     const float Threshold = 0.1f;
@@ -240,7 +245,11 @@ public class CharacterController : MonoBehaviour
         {
             leftHitCollider.enabled = true;
 
-            leftCollider.color = new Color(1f, 0f, 0f, 0.5f);
+            if (visualHitColliderActivate)
+            {
+                leftCollider.color = new Color(1f, 0f, 0f, 0.5f);
+
+            }
 
 
             if (delayHitActivate)
@@ -252,7 +261,12 @@ public class CharacterController : MonoBehaviour
         else
         {           
             rightHitCollider.enabled = true;
-            rightCollider.color = new Color(1f, 0f, 0f, 0.5f);
+
+            if (visualHitColliderActivate)
+            {
+                rightCollider.color = new Color(1f, 0f, 0f, 0.5f);
+
+            }
 
             if (delayHitActivate)
             {
@@ -268,9 +282,12 @@ public class CharacterController : MonoBehaviour
         leftHitCollider.enabled = false;
         rightHitCollider.enabled = false;
 
-        rightCollider.color = new Color(1f, 1f, 0f, 0.3f);
-        leftCollider.color = new Color(1f, 1f, 0f, 0.3f);
-
+        if (visualHitColliderActivate)
+        {
+            rightCollider.color = new Color(1f, 1f, 0f, 0.3f);
+            leftCollider.color = new Color(1f, 1f, 0f, 0.3f);
+        }
+            
     }
 
    
