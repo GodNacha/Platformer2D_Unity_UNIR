@@ -24,6 +24,14 @@ public class AI_EnemyFlyer : MonoBehaviour
     [SerializeField] LayerMask groundLayerMask;
     [SerializeField] float groundCheckDistance = 0.2f;
 
+    [Header("Audio")]
+    public AudioSource audioFlyer;
+    public AudioClip hitClip;
+    public AudioClip deadClip;
+    public AudioClip preAttackClip;
+    public AudioClip attackingClip;
+    public AudioClip finalAttackClip;
+
     private bool chesing = false; //Variable para saber si el enemigo está persiguiendo al jugador
 
     private bool dead = false;
@@ -49,6 +57,8 @@ public class AI_EnemyFlyer : MonoBehaviour
 
         waypointPatrol = GetComponent<WaypointPatrol>();
         anim = GetComponent<Animator>();
+        audioFlyer = GetComponent<AudioSource>();
+        
     }
 
     private void Update()
@@ -161,7 +171,10 @@ public class AI_EnemyFlyer : MonoBehaviour
         characterController2D.SetRawMove(Vector2.zero); //Detiene el movimiento horizontal del enemigo al iniciar el ataque, para que no siga moviéndose mientras ataca
 
         anim.SetTrigger("Pre-Attack"); //Animación de pre-Ataque
-      
+
+        audioFlyer.clip = preAttackClip;
+        audioFlyer.Play();
+
         yield return new WaitForSeconds(0.45f); //Esperar a que termine la animación.
 
         if (canceledAttack || dead)
@@ -191,6 +204,10 @@ public class AI_EnemyFlyer : MonoBehaviour
 
             characterController2D.OnAttackAnimation(); //Se activa el Collider Hit del enemigo.
 
+            audioFlyer.clip = attackingClip;
+            audioFlyer.loop = true;
+            audioFlyer.Play();
+
         }
 
     }
@@ -202,7 +219,12 @@ public class AI_EnemyFlyer : MonoBehaviour
         anim.SetTrigger("Hit Floor"); //Animación de golpe al suelo.
 
         characterController2D.rb.linearVelocityY = 0; //Detiene el impulso hacia abajo
- 
+
+        audioFlyer.Stop();
+        audioFlyer.loop = false;
+        audioFlyer.clip = finalAttackClip;
+        audioFlyer.Play();
+
         StartCoroutine(AfterAttack());
 
         Debug.Log("Impulso de ataque detenido");
@@ -250,6 +272,7 @@ public class AI_EnemyFlyer : MonoBehaviour
 
             if (characterController2D.attacking && !inmune)
             {
+                audioFlyer.Stop();
                 CancelAttack();
             }
 
@@ -260,7 +283,7 @@ public class AI_EnemyFlyer : MonoBehaviour
                 
                 Dead();
 
-                //Agregar efecto de sonido
+                audioFlyer.PlayOneShot(deadClip);
 
             }
             else
@@ -268,6 +291,7 @@ public class AI_EnemyFlyer : MonoBehaviour
 
                 anim.SetTrigger("Hit"); //Animación de recibir daño
                 StartCoroutine(AfterAttack());
+                audioFlyer.PlayOneShot(hitClip);
                 //Agregar efecto de sonido
             }
         }

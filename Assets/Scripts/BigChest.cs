@@ -11,19 +11,23 @@ public class BigChest : MonoBehaviour
 
     private PlayerInventory inventory;
     private Animator animChest;
-    private Animator animTextChest;
+    public Animator animTextChest;
     private SplashCoins splashCoins;
     private GameManager gameManager;
     private Collider2D chestCollider;
+
+    [Header("Audio")]
+    private AudioSource audioSource;
+    public AudioClip negativeSound;
 
     private void Awake()
     {
         inventory = FindAnyObjectByType<PlayerInventory>();
         animChest = GetComponent<Animator>();
         splashCoins = GetComponentInChildren<SplashCoins>();
-        animTextChest = GetComponent<Animator>();
         gameManager = FindAnyObjectByType<GameManager>();
-        chestCollider = GetComponent<Collider2D>(); 
+        chestCollider = GetComponent<Collider2D>();
+        audioSource = GetComponent<AudioSource>();
 
         if (feedbackText == null)
         {
@@ -52,6 +56,10 @@ public class BigChest : MonoBehaviour
             feedbackText.text = "I need the key!";
 
             feedbackTextAnimator.SetTrigger("ShowText");
+
+            audioSource.Stop();
+            audioSource.clip = negativeSound;
+            audioSource.Play();
         }
     }
 
@@ -64,6 +72,7 @@ public class BigChest : MonoBehaviour
         gameManager.Win();
 
         Debug.Log("Cofre abierto");
+
 
     }
 

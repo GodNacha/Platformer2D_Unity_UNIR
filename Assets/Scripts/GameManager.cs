@@ -9,18 +9,31 @@ public class GameManager : MonoBehaviour
     public GameObject winUI;
     public TextMeshProUGUI textScore1;
     public TextMeshProUGUI textScore2;
+    public GameObject StatsPanel;
 
     [Header("References")]
     PlayerController player;
 
     [SerializeField] public bool endGame = false;
 
+    [Header("Audio")]
+    private AudioSource audioSource;
+    private AudioSource musicAudioSource;
+    public AudioClip gameOverClip;
+    public AudioClip winClip;
+
     private void Awake()
     {
         player = FindAnyObjectByType<PlayerController>();
 
+        audioSource = GetComponent<AudioSource>();
+
+        musicAudioSource = GameObject.Find("MusicAudio")?.GetComponent<AudioSource>();
+
         gameOverUI.SetActive(false);
         winUI.SetActive(false);
+        StatsPanel.SetActive(true);
+
     }
 
     public void GameOver()
@@ -33,6 +46,15 @@ public class GameManager : MonoBehaviour
         player.enabled = false; // Desactiva el script del jugador para evitar que siga moviéndose o atacando      
 
         Cursor.visible = true;
+
+        audioSource.PlayOneShot(gameOverClip);
+
+        if (musicAudioSource != null)
+        {
+            musicAudioSource.Stop(); // Detiene la música de fondo al perder
+        }
+
+        StatsPanel.SetActive(false); 
     }
 
     public void Win()
@@ -46,6 +68,16 @@ public class GameManager : MonoBehaviour
         winUI.SetActive(true);
 
         Cursor.visible = true;
+
+        audioSource.PlayOneShot(winClip);
+
+        if (musicAudioSource != null)
+        {
+            musicAudioSource.Stop(); // Detiene la música de fondo al perder
+        }
+
+        StatsPanel.SetActive(false); 
+
 
     }
 }

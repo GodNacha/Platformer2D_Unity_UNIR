@@ -10,6 +10,10 @@ public class Key : MonoBehaviour
 
     private PlayerInventory inventory;
 
+    [Header("Audio")]
+    public AudioSource audioSource;
+    public AudioClip keyPickupSound;
+
     void Start()
     {
         animFeedbackText = GameObject.Find("CanvasHeadPlayer").GetComponent<Animator>();
@@ -24,6 +28,7 @@ public class Key : MonoBehaviour
         {
             if (inventory != null)
             {
+                audioSource.PlayOneShot(keyPickupSound);
                 inventory.hasKey = true;
 
                 feedbackText.text = "I got the key!";

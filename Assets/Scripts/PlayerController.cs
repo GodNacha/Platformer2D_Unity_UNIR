@@ -11,6 +11,7 @@ public class PlayerController : MonoBehaviour
     [Header("UI References")]
     public TextMeshProUGUI textLifes;
     public TextMeshProUGUI textCoins;
+    public Animator animLifeUI;
 
     [Header("Player Stats")]
     [SerializeField] public int coins = 0;
@@ -36,12 +37,24 @@ public class PlayerController : MonoBehaviour
     [SerializeField] InputActionReference jump;
     [SerializeField] InputActionReference attack;
 
+    [Header("Audio")]
+    public AudioSource audioPlayer;
+    public AudioSource audioCoin;
+    public AudioClip hitClip;
+    public AudioClip deadClip;
+    public AudioClip cancelAttack;
+    public AudioClip coinClip;
+    public AudioClip attackClip1;
+    public AudioClip attackClip2;
+    public AudioClip lifeClip;
+
     private void Awake()
     {
         characterController2D = GetComponent<CharacterController>();
         anim = GetComponent<Animator>();
         gameManager = FindAnyObjectByType<GameManager>();
-        
+        audioPlayer = GetComponent<AudioSource>();
+
         if (cinemachineCamera == null)
         {
             Debug.LogWarning("Cinemachine Camera Player reference is missing. Attempting to find one in the scene.");
@@ -85,6 +98,8 @@ public class PlayerController : MonoBehaviour
         if (!dead && !characterController2D.attacking)
         {
             attackCorutine = StartCoroutine(Attack());
+           
+            
         }
        
     }
@@ -100,7 +115,9 @@ public class PlayerController : MonoBehaviour
 
     public void AddScoreCoin()
     {
-        //Agregar reproducción de sonido al recoger moneda
+        audioCoin.Stop();
+        audioCoin.clip = coinClip;
+        audioCoin.Play();
 
         coins++;
         textCoins.text = "X " + coins;
@@ -122,13 +139,20 @@ public class PlayerController : MonoBehaviour
             anim.SetTrigger("Attack"); //Animación de ataque
             characterController2D.canMove = false;
 
+            audioPlayer.PlayOneShot(attackClip1);
+
+
         }
         else
         {
             anim.SetTrigger("Attack"); //Animación de ataque en el aire
-            
+
+            audioPlayer.PlayOneShot(attackClip2);
+
+
+
         }
-     
+
         yield return new WaitForSeconds(0.15f); 
         
         if (canceledAttack || dead)
@@ -159,6 +183,8 @@ public class PlayerController : MonoBehaviour
         StopCoroutine(attackCorutine);
         attackCorutine = null;
         StartCoroutine(CanceledAttack());
+
+        audioPlayer.PlayOneShot(cancelAttack); //Reproduce el sonido de cancelar ataque
     }
 
     public IEnumerator CanceledAttack()
@@ -183,6 +209,7 @@ public class PlayerController : MonoBehaviour
         {
             lifes--;
             textLifes.text = "X " + lifes;
+            animLifeUI.SetTrigger("Lose");
 
             characterController2D.canMove = true; //Para que se pueda mover y no quede estancado
             characterController2D.SetRawMove(rawMove);
@@ -198,14 +225,14 @@ public class PlayerController : MonoBehaviour
             {
                 Dead();
 
-                //Agregar efecto de sonido
-
             }
             else
             {
                 anim.SetTrigger("Hit"); //Animación de recibir daño
                 StartCoroutine(AfterAttack());
                 StartCoroutine(Inumity());
+
+                audioPlayer.PlayOneShot(hitClip);
 
                 //Agregar efecto de sonido
             }
@@ -218,13 +245,16 @@ public class PlayerController : MonoBehaviour
     {
         lifes++;
         textLifes.text = "X " + lifes;
-        //Agregar efecto de sonido
+
+        audioPlayer.PlayOneShot(lifeClip);
     }
 
 
     public void Dead()
     {
-        dead = true;    
+        dead = true;
+
+        audioPlayer.PlayOneShot(deadClip);
 
         anim.SetTrigger("Dead"); //Animación de muerte
 

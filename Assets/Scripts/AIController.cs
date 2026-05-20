@@ -38,6 +38,13 @@ public class AIController : MonoBehaviour
     Collider2D enemyCollider;
     Collider2D playerCollider;
 
+    [Header("Audio")]
+    public AudioSource audioMushroom;
+    public AudioClip hitClip;
+    public AudioClip deadClip;
+    public AudioClip preAttackClip;
+    public AudioClip impulseClip;
+
 
     private void Awake()
     {
@@ -49,6 +56,8 @@ public class AIController : MonoBehaviour
 
         anim = GetComponent<Animator>();
         waypointPatrol = GetComponent<WaypointPatrol>();
+
+        audioMushroom = GetComponent<AudioSource>();
     }
 
     private void Update()
@@ -158,6 +167,8 @@ public class AIController : MonoBehaviour
 
             characterController2D.OnAttackAnimation();
 
+            audioMushroom.PlayOneShot(impulseClip); //Reproduce el sonido de impulso al atacar
+
             Debug.Log("Impulso de ataque aplicado"); //Aquí es donde se aplicaría el impulso al enemigo al atacar, para que se impulse hacia el jugador, esto se puede ajustar dependiendo de la fuerza del impulso que se quiera para el enemigo al atacar
 
         }
@@ -170,6 +181,10 @@ public class AIController : MonoBehaviour
 
         characterController2D.canMove = false;
         characterController2D.attacking = true;
+
+        audioMushroom.Stop();
+        audioMushroom.clip = preAttackClip;
+        audioMushroom.Play();
 
         if (characterController2D.IsGrounded())
         {
@@ -246,6 +261,7 @@ public class AIController : MonoBehaviour
 
             if (characterController2D.attacking && !inmune)
             {
+                audioMushroom.Stop();
                 CancelAttack();
             }
 
@@ -255,14 +271,14 @@ public class AIController : MonoBehaviour
             {
                 Dead();
 
-                //Agregar efecto de sonido
+                audioMushroom.PlayOneShot(deadClip); //Reproduce el sonido de muerte
 
             }
             else
             {
                 anim.SetTrigger("Hit"); //Animación de recibir daño
                 StartCoroutine(AfterAttack());
-                //Agregar efecto de sonido
+                audioMushroom.PlayOneShot(hitClip);
             }
         }
     }

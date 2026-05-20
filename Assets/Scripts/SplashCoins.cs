@@ -13,10 +13,30 @@ public class SplashCoins : MonoBehaviour
     [SerializeField] private float minUpForce = 1.5f;
     [SerializeField] private float maxUpForce = 3f;
     [SerializeField] private float horizontalForce = 4f;
-   
+
+    [Header("Audio")]
+    private AudioSource audioSource;
+    public AudioClip coinSplashClip;
+    public AudioClip objectOpenClip;
+
+    void Start()
+    {
+        audioSource = GetComponent<AudioSource>();
+    }
 
     public void Splash()
     {
+        if (coinSplashClip != null)
+        {
+            audioSource.PlayOneShot(coinSplashClip);
+
+        }
+
+        if (objectOpenClip != null)
+        {
+            audioSource.PlayOneShot(objectOpenClip);
+        }   
+
         for (int i = 0; i < coinAmount; i++)
         {
             GameObject coin = Instantiate(coinPrefab, spawnPoint.position, Quaternion.identity); //Instnacia la moneda en la posición del spawnPoint
@@ -32,5 +52,7 @@ public class SplashCoins : MonoBehaviour
                 rb.AddForce(randomForce, ForceMode2D.Impulse);
             }
         }
+
+
     }
 }

@@ -128,6 +128,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4e400e403f65eed4eb657adf365d6e8c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Key
+  feedbackText: {fileID: 0}
+  animFeedbackText: {fileID: 0}
+  audioSource: {fileID: 0}
+  keyPickupSound: {fileID: 8300000, guid: 70b081cb275c17345ba1f258828047e4, type: 3}
 --- !u!61 &5101869911996904800
 BoxCollider2D:
   m_ObjectHideFlags: 0

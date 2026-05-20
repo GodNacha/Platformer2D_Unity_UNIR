@@ -35,12 +35,21 @@ public class CharacterController : MonoBehaviour
     public bool canMove = true;
     public bool attacking = false;
     bool canJump = true;
+    private bool isMoving = false;
+
+    private bool touchedFloor = true;
 
     private SpriteRenderer rightCollider;
     private SpriteRenderer leftCollider;
 
     [Header("References")]
     GameManager gameManager;
+
+    [Header("Audio")]
+    public AudioSource audioMovement;
+    public AudioClip jumpClip;
+    public AudioClip moveClip;
+    public AudioClip touchFloorClip;
 
 
 
@@ -52,6 +61,12 @@ public class CharacterController : MonoBehaviour
         gameManager = FindAnyObjectByType<GameManager>();
         rightCollider = rightHitCollider.GetComponent<SpriteRenderer>();
         leftCollider = leftHitCollider.GetComponent<SpriteRenderer>();
+
+        if (audioMovement == null)
+        {
+            Debug.LogWarning("AudioSource for movement is not assigned. Attempting to find one on the GameObject.");
+        }
+
 
     }
 
@@ -86,9 +101,14 @@ public class CharacterController : MonoBehaviour
             if (!isEnemy && !canMove)
             {
                 rb.linearVelocityX = 0; //El jugador se queda quieto al atacar.
+
+                audioMovement.Stop();
+
+                audioMovement.loop = false;
             }
             
         }
+  
 
         bool isMoving = Mathf.Abs(rawMove.x) > Threshold;
 
@@ -103,11 +123,53 @@ public class CharacterController : MonoBehaviour
                 ? movingLeft
                 : !movingLeft;
 
+            if (IsGrounded() && !isEnemyFryer && !attacking && !audioMovement.isPlaying)
+            {
+                audioMovement.clip = moveClip;
+                audioMovement.loop = true;
+                audioMovement.Play();
+            }
+            else
+            {
+                audioMovement.loop = false;
+            }
+
+            if (isEnemyFryer && !attacking && !audioMovement.isPlaying)
+            {
+                audioMovement.clip = moveClip;
+                audioMovement.loop = true;
+                audioMovement.Play();
+            }
+            else
+            {
+                if (isEnemyFryer && attacking || rawMove == Vector2.zero)
+                {
+                    audioMovement.loop = false;
+                }
+         
+            }
+
+        }
+        else
+        {
+            audioMovement.loop = false;
         }
 
-        if(!isEnemyFryer)
+        if (!isEnemyFryer)
         {
             anim.SetBool("IsGrounded", IsGrounded()); //Animación volando en el aire
+
+            if (IsGrounded() && rb.linearVelocityY < 0) //Esto es para reproducir el sonido de tocar el suelo, solo se reproduce si el personaje esta cayendo, para evitar que se reproduzca el sonido al saltar
+            {
+                if (touchFloorClip != null && !touchedFloor && !isEnemyFryer)
+                {
+                    audioMovement.loop = false;
+                    audioMovement.PlayOneShot(touchFloorClip);
+                    touchedFloor = true;
+                }
+
+
+            }
         }
 
         
@@ -122,10 +184,13 @@ public class CharacterController : MonoBehaviour
         if (canMove)
         {
             this.rawMove = rawMove;
+                 
         }
         else       
         {
             this.rawMove = Vector2.zero; //Si no se puede mover, el rawMove se establece en cero para que el personaje no se mueva.
+
+            audioMovement.loop = false;
         }
 
     }
@@ -155,6 +220,12 @@ public class CharacterController : MonoBehaviour
         {
             anim.SetTrigger("Jump"); //Animación de salto
             rb.linearVelocityY = jumpVelocity;
+
+            audioMovement.loop = false;
+
+            audioMovement.PlayOneShot(jumpClip); //Reproduce el sonido de salto
+
+            touchedFloor = false;
 
         }
 
