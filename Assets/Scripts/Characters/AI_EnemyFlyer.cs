@@ -1,5 +1,6 @@
 using UnityEngine;
 using System.Collections;
+using UnityEngine.UI;
 
 public class AI_EnemyFlyer : MonoBehaviour
 {
@@ -14,7 +15,7 @@ public class AI_EnemyFlyer : MonoBehaviour
     [SerializeField] Transform target;
 
     [Header("Enemy Stats")]
-    public int lifes = 3;
+    public int startLifes = 1;
     public Animator anim;
     public float attackDownSpeed = 2.8f;
 
@@ -23,6 +24,9 @@ public class AI_EnemyFlyer : MonoBehaviour
     [SerializeField] float chestRange = 8f;
     [SerializeField] LayerMask groundLayerMask;
     [SerializeField] float groundCheckDistance = 0.2f;
+
+    [Header("UI References")]
+    [SerializeField] Image healthBarFill;
 
     [Header("Audio")]
     public AudioSource audioFlyer;
@@ -36,10 +40,12 @@ public class AI_EnemyFlyer : MonoBehaviour
 
     private bool dead = false;
     bool impulseActivate = false;
+    bool impulsing = false;
     bool inmune = false;
     bool canceledAttack = false;
     private Coroutine attackCoroutine;
     bool attackStarted = false;
+    float currentLifes;
 
     private float targetAttackY;
     public Transform jugadorReal;
@@ -59,7 +65,10 @@ public class AI_EnemyFlyer : MonoBehaviour
         waypointPatrol = GetComponent<WaypointPatrol>();
         anim = GetComponent<Animator>();
         audioFlyer = GetComponent<AudioSource>();
-        
+
+        currentLifes = startLifes;
+
+
     }
 
     private void Update()
@@ -133,21 +142,24 @@ public class AI_EnemyFlyer : MonoBehaviour
 
                 if (!characterController2D.attacking && !dead && !attackStarted)
                 {
-                    attackStarted = true;
-                    attackCoroutine = StartCoroutine(AttackCoroutine()); //Llama a la Corrutina Attack para que el enemigo ataque al jugador cuando esté lo suficientemente cerca
-                    characterController2D.rb.linearVelocity = Vector2.zero;
+                    attackStarted = true;   
+                    characterController2D.rb.linearVelocity = Vector2.zero; //Detiene cualquier movimiento residual antes de atacar
                     characterController2D.SetRawMove(Vector2.zero);
+                    characterController2D.canMove = false;
+
+                    attackCoroutine = StartCoroutine(AttackCoroutine()); //Llama a la Corrutina Attack para que el enemigo ataque al jugador cuando esté lo suficientemente cerca
+                    
 
                 }
             }
 
         }
 
-        if (characterController2D.attacking && impulseActivate)
+        if (characterController2D.attacking && impulseActivate && !impulsing)
         {
-            Vector2 impulseDown = new Vector2(0, -attackDownSpeed);
+            impulsing = true;
+            characterController2D.rb.linearVelocity = new Vector2(0, -attackDownSpeed);
 
-            rawMove = impulseDown;
         }
 
         characterController2D.SetRawMove(rawMove);
@@ -176,7 +188,7 @@ public class AI_EnemyFlyer : MonoBehaviour
     {
         canceledAttack = false;     
 
-       // characterController2D.canMove = false;
+       
         characterController2D.attacking = true;
 
         anim.SetTrigger("Pre-Attack"); //Animación de pre-Ataque
@@ -251,6 +263,7 @@ public class AI_EnemyFlyer : MonoBehaviour
         characterController2D.attacking = false;
         characterController2D.canMove = true;
         attackStarted = false;
+        impulsing = false;
     }
 
     public void CancelAttack()
@@ -274,6 +287,7 @@ public class AI_EnemyFlyer : MonoBehaviour
         characterController2D.attacking = false;
         characterController2D.canMove = true;
         attackStarted = false;
+        impulsing = false;
     }
 
 
@@ -281,7 +295,9 @@ public class AI_EnemyFlyer : MonoBehaviour
     {
         if (!dead && !inmune)
         {
-            lifes--;
+            currentLifes -= 0.35f; //Resta 0.35 vidas por cada ataque
+
+            healthBarFill.fillAmount = currentLifes / startLifes; //Actualiza la barra de vida
 
             if (characterController2D.attacking && !inmune)
             {
@@ -291,7 +307,7 @@ public class AI_EnemyFlyer : MonoBehaviour
 
             inmune = true;
 
-            if (lifes <= 0)
+            if (currentLifes <= 0)
             {
                 
                 Dead();
@@ -331,7 +347,7 @@ public class AI_EnemyFlyer : MonoBehaviour
 
     IEnumerator Destroy()
     {
-        yield return new WaitForSeconds(3.5f);
+        yield return new WaitForSeconds(2f);
         Destroy(gameObject); //Destruye el GameObject después de un tiempo, para que la animación de muerte se reproduzca completamente antes de eliminar el personaje de la escena
     }
 

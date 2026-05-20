@@ -1,5 +1,7 @@
 using System.Collections;
+using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class AIController : MonoBehaviour
 {
@@ -15,14 +17,17 @@ public class AIController : MonoBehaviour
     [SerializeField] Transform target;
 
     [Header("Enemy Stats")]
-    public int lifes = 3;
-    public Animator anim;
-    public float impulseForce = 2.8f; //Fuerza del impulso al atacar
-    public float delayAttack = 0.3f;
+    [SerializeField] public int startLifes = 1;
+    [SerializeField] public Animator anim;
+    [SerializeField] public float impulseForce = 2.8f; //Fuerza del impulso al atacar
+    [SerializeField] public float delayAttack = 0.3f;
 
     [Header("Detection Range")]
     [SerializeField] float detectionRange = 4f; //Rango de detección del enemigo para detectar al jugador
     [SerializeField] float chestRange = 8f;
+
+    [Header("UI References")]
+    [SerializeField] Image healthBarFill; 
 
     private bool chesing = false; //Variable para saber si el enemigo está persiguiendo al jugador
 
@@ -36,6 +41,8 @@ public class AIController : MonoBehaviour
     private Coroutine attackCorutine;
 
     private bool attackStarted = false;
+
+    private float currentLifes;
 
 
     Collider2D enemyCollider;
@@ -61,6 +68,8 @@ public class AIController : MonoBehaviour
         waypointPatrol = GetComponent<WaypointPatrol>();
 
         audioMushroom = GetComponent<AudioSource>();
+
+        currentLifes = startLifes;
     }
 
     private void Update()
@@ -87,7 +96,7 @@ public class AIController : MonoBehaviour
 
         //Patrullando los waypoints
 
-        if (!chesing && !dead && !gameManager.endGame)
+        if (!chesing && !dead && !gameManager.endGame && !characterController2D.attacking)
         {
             waypointPatrol.UpdatePatrol();
 
@@ -117,7 +126,7 @@ public class AIController : MonoBehaviour
 
         //Persiguiendo al jugador
 
-        if (target && chesing && !dead && !gameManager.endGame && !attackStarted)
+        if (target && chesing && !dead && !gameManager.endGame && !attackStarted && !characterController2D.attacking)
         {
             waypointPatrol.StopWaiting(); //Se corta la espera del waypoint para empezar a seguir al jugador.
 
@@ -130,7 +139,7 @@ public class AIController : MonoBehaviour
                 rawMove = Vector2.right;
            }
 
-           if (Mathf.Abs(transform.position.x - target.position.x) < 0.5f) //Para que se quede quieto al llegar al target, y no se quede vibrando por estar cambiando constantemente de dirección
+           if (Mathf.Abs(transform.position.x - target.position.x) < 0.4f) //Para que se quede quieto al llegar al target, y no se quede vibrando por estar cambiando constantemente de dirección
            {
                 rawMove = Vector2.zero; //Se queda quieto
 
@@ -216,6 +225,10 @@ public class AIController : MonoBehaviour
             AttackImpulse(); //Aplica el impulso al atacar        
 
         }
+        else
+        {
+            yield break;
+        }
     }
 
     public IEnumerator AfterAttack()
@@ -252,7 +265,7 @@ public class AIController : MonoBehaviour
         yield return new WaitForSeconds(0.3f); //Tiempo de espera después de atacar para recuperar movimiento y ataque.
         canceledAttack = false;
         inmune = false;
-        yield return new WaitForSeconds(1f); //Tiempo de espera después de atacar para recuperar movimiento y ataque.
+        yield return new WaitForSeconds(1.3f); //Tiempo de espera después de atacar para recuperar movimiento y ataque.
         characterController2D.attacking = false;
         characterController2D.canMove = true;
         attackStarted = false;
@@ -263,7 +276,9 @@ public class AIController : MonoBehaviour
     {
         if (!dead && !inmune)
         {
-            lifes--;
+            currentLifes -= 0.35f; //Resta 0.35 vidas por cada ataque
+
+            healthBarFill.fillAmount = currentLifes / startLifes; //Actualiza la barra de vida
 
             if (characterController2D.attacking && !inmune)
             {
@@ -273,7 +288,7 @@ public class AIController : MonoBehaviour
 
             inmune = true;
 
-            if (lifes <= 0)
+            if (currentLifes <= 0)
             {
                 Dead();
 
@@ -314,7 +329,7 @@ public class AIController : MonoBehaviour
 
     IEnumerator Destroy()
     {
-        yield return new WaitForSeconds(3.5f);
+        yield return new WaitForSeconds(2f);
         Destroy(gameObject); //Destruye el GameObject después de un tiempo, para que la animación de muerte se reproduzca completamente antes de eliminar el personaje de la escena
     }
 

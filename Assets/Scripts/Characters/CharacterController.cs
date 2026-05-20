@@ -15,7 +15,6 @@ public class CharacterController : MonoBehaviour
     [Header("Stats")]
     [SerializeField] public float movementSpeed = 5f;
     [SerializeField] public float jumpVelocity = 3f;
-    [SerializeField] public int lifes = 3;
     [SerializeField] public bool isEnemy = false; //Esto es para diferenciar entre el jugador y los enemigos.
     [SerializeField] public bool isEnemyFryer = false;
     [SerializeField] bool delayHitActivate = true;
